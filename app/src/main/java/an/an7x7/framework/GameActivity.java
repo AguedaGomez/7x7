@@ -1,4 +1,5 @@
-package com.bubbles.an.ujibubbles.framework;
+package an.an7x7.framework;
+
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;

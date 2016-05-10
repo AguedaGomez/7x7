@@ -1,11 +1,10 @@
-package com.bubbles.an.ujibubbles.framework;
+package an.an7x7.framework;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.util.Log;
 
 import static android.graphics.Bitmap.Config.ARGB_8888;
 

@@ -1,4 +1,4 @@
-package com.bubbles.an.ujibubbles.framework;
+package an.an7x7.framework;
 
 import android.content.Context;
 import android.graphics.Bitmap;

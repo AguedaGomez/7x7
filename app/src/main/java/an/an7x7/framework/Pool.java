@@ -1,4 +1,4 @@
-package com.bubbles.an.ujibubbles.framework;
+package an.an7x7.framework;
 
 import java.util.ArrayList;
 import java.util.List;

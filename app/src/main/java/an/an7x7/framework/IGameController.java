@@ -1,8 +1,8 @@
-package com.bubbles.an.ujibubbles.framework;
+package an.an7x7.framework;
 
 import android.graphics.Bitmap;
 
-import com.bubbles.an.ujibubbles.framework.TouchHandler.TouchEvent;
+import an.an7x7.framework.TouchHandler.TouchEvent;
 
 import java.util.List;
 
