@@ -9,13 +9,13 @@ import an.an7x7.framework.IGameController;
  * Created by NachoLR on 10/05/2016.
  */
 public class TestGrid extends GameActivity {
-    private testGridController testController;
+    private TestGridController testController;
 
     @Override
     protected IGameController buildGameController() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        testController = new testGridController( displayMetrics.widthPixels, displayMetrics.heightPixels);
+        testController = new TestGridController( displayMetrics.widthPixels, displayMetrics.heightPixels,this);
         return testController;
     }
 }
