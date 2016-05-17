@@ -23,6 +23,7 @@ public class TestGridController implements IGameController {
     private final float squareSide;
 
     private Graphics graphics;
+    private TestGridModel model;
 
     public TestGridController(float screenWidth, float screenHeight, Context context){
 
@@ -31,10 +32,11 @@ public class TestGridController implements IGameController {
         this.context = context;
         squareSide = screenWidth/7 - SQUARE_PADDING;
         graphics = new Graphics((int) width, (int) height);
+        model = new TestGridModel();
     }
 
     private int xScreen2column(float xScreen){
-        return (int)((xScreen - SQUARE_PADDING)/(SQUARE_PADDING + squareSide)); //pasarlo a entero o hacer división entera
+        return (int)((xScreen - SQUARE_PADDING)/(SQUARE_PADDING + squareSide));
     }
 
     private int yScreen2row(float yScreen) {
@@ -51,6 +53,11 @@ public class TestGridController implements IGameController {
 
     @Override
     public void onUpdate(float deltaTime, List<TouchHandler.TouchEvent> touchEvents) {
+        for (TouchHandler.TouchEvent touchEvent: touchEvents)
+            if (touchEvent.type == TouchHandler.TouchType.TOUCH_UP) {
+                int columnBoard = xScreen2column(touchEvent.x), rowBoard = yScreen2row(touchEvent.y);
+                model.onTouch(columnBoard, rowBoard);
+            }
 
     }
 

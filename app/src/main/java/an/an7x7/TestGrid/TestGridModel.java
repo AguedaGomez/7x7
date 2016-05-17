@@ -5,6 +5,13 @@ package an.an7x7.TestGrid;
  */
 public class TestGridModel {
 
-    public TestGridModel(){}
+
+    public TestGridModel(){
+
+    }
+
+    public void onTouch(int cB, int rB) {
+
+    }
 
 }
