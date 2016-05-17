@@ -33,7 +33,7 @@ public class Graphics {
         canvas.drawRGB((color & 0xff0000) >> 16, (color & 0xff00) >> 8, color & 0xff);
     }
 
-    public void drawRect(int x, int y, int width, int height, int color) {
+    public void drawRect(float x, float y, float width, float height, int color) {
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(x, y, x + width - 1, y + height - 1, paint);
@@ -52,7 +52,6 @@ public class Graphics {
     }
 
     public void drawText (String text, float x, float y) {
-        Paint paint = new Paint();
         paint.setColor(Color.BLACK);
         canvas.drawText(text, x, y, paint);
     }

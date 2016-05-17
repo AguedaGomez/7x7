@@ -3,7 +3,6 @@ package an.an7x7.TestGrid;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
 
 import java.util.List;
 
@@ -26,15 +25,28 @@ public class TestGridController implements IGameController {
     private Graphics graphics;
 
     public TestGridController(float screenWidth, float screenHeight, Context context){
-        Log.d("TEST"," Construyendo el controller. ");
+
         this.width = screenWidth;
         this.height = screenHeight;
         this.context = context;
-        squareSide = screenWidth/7 - SQUARE_PADDING * 8;
+        squareSide = screenWidth/7 - SQUARE_PADDING;
+        graphics = new Graphics((int) width, (int) height);
     }
 
-    private float xScreen2column(float xScreen){
-        return (xScreen-SQUARE_PADDING)/(SQUARE_PADDING+squareSide);
+    private int xScreen2column(float xScreen){
+        return (int)((xScreen - SQUARE_PADDING)/(SQUARE_PADDING + squareSide)); //pasarlo a entero o hacer división entera
+    }
+
+    private int yScreen2row(float yScreen) {
+        return (int)((height - yScreen - SQUARE_PADDING + 7*(SQUARE_PADDING + squareSide))/(SQUARE_PADDING + squareSide));
+    }
+
+    private float column2xScreen(int column) {
+        return SQUARE_PADDING + column * (SQUARE_PADDING + squareSide);
+    }
+
+    private float row2yScreen(int row) {
+        return height - SQUARE_PADDING - row *(SQUARE_PADDING + squareSide);
     }
 
     @Override
@@ -44,11 +56,16 @@ public class TestGridController implements IGameController {
 
     @Override
     public Bitmap onDrawingRequested() {
-
         graphics.clear(Color.WHITE);
+        float x,y;
+        for(int r = 0 ; r <= 7; r++) {
+            for (int c = 0; c < 7; c++) {
+                x = column2xScreen(c);
+                y = row2yScreen(r);
+                graphics.drawRect(x, y,  squareSide, squareSide, Color.GRAY);
+            }
+        }
 
-        for(int r = 0 ; )
-
-        return null;
+        return graphics.getFrameBuffer();
     }
 }
