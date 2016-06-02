@@ -16,6 +16,7 @@ import an.an7x7.framework.TouchHandler;
 public class TestGridController implements IGameController {
 
     private static final float SQUARE_PADDING = 2;
+    private static final int BOARD_DIMENSION = 7;
 
     private final float width;
     private final float height;
@@ -65,11 +66,11 @@ public class TestGridController implements IGameController {
     public Bitmap onDrawingRequested() {
         graphics.clear(Color.WHITE);
         float x,y;
-        for(int r = 0 ; r <= 7; r++) {
-            for (int c = 0; c < 7; c++) {
+        for(int r = 0 ; r <= BOARD_DIMENSION; r++) {
+            for (int c = 0; c < BOARD_DIMENSION; c++) {
                 x = column2xScreen(c);
                 y = row2yScreen(r);
-                graphics.drawRect(x, y,  squareSide, squareSide, Color.GRAY);
+                graphics.drawRect(x, y,  squareSide, squareSide, model.allSquares[r][c].getColor());
             }
         }
 
