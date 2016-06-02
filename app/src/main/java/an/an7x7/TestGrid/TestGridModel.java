@@ -1,5 +1,7 @@
 package an.an7x7.TestGrid;
 
+import android.graphics.Color;
+
 import an.an7x7.Model.Square;
 
 /**
@@ -13,6 +15,7 @@ public class TestGridModel {
     public TestGridModel(){
 
         allSquares = new Square[7][7];
+        startLevel();
 
     }
 
@@ -24,6 +27,8 @@ public class TestGridModel {
     }
 
     public void onTouch(int cB, int rB) {
+
+        allSquares[rB][cB].setColor(Color.RED);
 
     }
 
