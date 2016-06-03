@@ -3,6 +3,7 @@ package an.an7x7.TestGrid;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import an.an7x7.framework.TouchHandler;
 public class TestGridController implements IGameController {
 
     private static final float SQUARE_PADDING = 2;
+    private static final int BOARD_DIMENSION = 7;
 
     private final float width;
     private final float height;
@@ -31,6 +33,7 @@ public class TestGridController implements IGameController {
         this.height = screenHeight;
         this.context = context;
         squareSide = screenWidth/7 - SQUARE_PADDING;
+        Log.d("TEST", "Alto: " + height + " Cuadrado: " + squareSide);
         graphics = new Graphics((int) width, (int) height);
         model = new TestGridModel();
     }
@@ -40,7 +43,7 @@ public class TestGridController implements IGameController {
     }
 
     private int yScreen2row(float yScreen) {
-        return (int)((height - yScreen - SQUARE_PADDING + 7*(SQUARE_PADDING + squareSide))/(SQUARE_PADDING + squareSide));
+        return (int)(7-((height - yScreen)/(squareSide + SQUARE_PADDING)));
     }
 
     private float column2xScreen(int column) {
@@ -48,7 +51,7 @@ public class TestGridController implements IGameController {
     }
 
     private float row2yScreen(int row) {
-        return height - SQUARE_PADDING - row *(SQUARE_PADDING + squareSide);
+        return height - (7-row) * (squareSide + SQUARE_PADDING);
     }
 
     @Override
@@ -56,20 +59,24 @@ public class TestGridController implements IGameController {
         for (TouchHandler.TouchEvent touchEvent: touchEvents)
             if (touchEvent.type == TouchHandler.TouchType.TOUCH_UP) {
                 int columnBoard = xScreen2column(touchEvent.x), rowBoard = yScreen2row(touchEvent.y);
+                Log.d("TEST", "y: " + touchEvent.y );
+                Log.d("TEST", "Fila: " + rowBoard + " Columna: " + columnBoard );
                 model.onTouch(columnBoard, rowBoard);
             }
 
     }
 
+
+
     @Override
     public Bitmap onDrawingRequested() {
         graphics.clear(Color.WHITE);
         float x,y;
-        for(int r = 0 ; r <= 7; r++) {
-            for (int c = 0; c < 7; c++) {
+        for(int r = 0 ; r < BOARD_DIMENSION; r++) {
+            for (int c = 0; c < BOARD_DIMENSION; c++) {
                 x = column2xScreen(c);
                 y = row2yScreen(r);
-                graphics.drawRect(x, y,  squareSide, squareSide, Color.GRAY);
+                graphics.drawRect(x, y,  squareSide, squareSide, model.allSquares[r][c].getColor());
             }
         }
 
