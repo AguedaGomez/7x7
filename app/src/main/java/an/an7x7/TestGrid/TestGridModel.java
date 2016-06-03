@@ -104,11 +104,11 @@ public class TestGridModel {
         allSquares[sRow][sColumn].visited = true;
 
         //compruebo el cuadrado superior
-        if(sRow > 0 ){ // si es == 0 no tiene superior
-            if(!allSquares[sRow - 1][sColumn].visited) { // si el superior aun no ha sido visitado
+        if (sRow > 0) { // si es == 0 no tiene superior
+            if (!allSquares[sRow - 1][sColumn].visited) { // si el superior aun no ha sido visitado
                 if (allSquares[sRow - 1][sColumn].getColor() == Color.LTGRAY) { // si el superior está vacío
                     allSquares[sRow - 1][sColumn].selectable = true;
-                    visitNeighbours(sRow-1,sColumn); //llamada "recursiva"
+                    visitNeighbours(sRow - 1, sColumn); //llamada "recursiva"
                 } else {
                     allSquares[sRow - 1][sColumn].selectable = false;
                 }
@@ -116,11 +116,11 @@ public class TestGridModel {
         }
 
         //compruebo el cuadrado inferior
-        if(sRow < 6 ){ // si es == 6 no tiene inferior
-            if(!allSquares[sRow + 1][sColumn].visited) { // si el inferior aun no ha sido visitado
+        if (sRow < 6) { // si es == 6 no tiene inferior
+            if (!allSquares[sRow + 1][sColumn].visited) { // si el inferior aun no ha sido visitado
                 if (allSquares[sRow + 1][sColumn].getColor() == Color.LTGRAY) { // si el inferior está vacío
                     allSquares[sRow + 1][sColumn].selectable = true;
-                    visitNeighbours(sRow + 1 ,sColumn); //llamada "recursiva"
+                    visitNeighbours(sRow + 1, sColumn); //llamada "recursiva"
                 } else {
                     allSquares[sRow + 1][sColumn].selectable = false;
                 }
@@ -128,28 +128,29 @@ public class TestGridModel {
         }
 
         //compruebo el cuadrado derecho
-        if(sColumn  < 6 ){ // si es == 6 no tiene cuadrado a su derecha
-            if(!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
+        if (sColumn < 6) { // si es == 6 no tiene cuadrado a su derecha
+            if (!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
                 if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el derecho está vacío
-                    allSquares[sRow ][sColumn + 1].selectable = true;
-                    visitNeighbours(sRow  ,sColumn + 1); //llamada "recursiva"
+                    allSquares[sRow][sColumn + 1].selectable = true;
+                    visitNeighbours(sRow, sColumn + 1); //llamada "recursiva"
                 } else {
-                    allSquares[sRow ][sColumn + 1].selectable = false;
+                    allSquares[sRow][sColumn + 1].selectable = false;
                 }
             }
         }
 
         //compruebo el cuadrado izquierdo
-        if(sColumn  > 0 ){ // si es == 0 no tiene cuadrado a su izquierda
-            if(!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
+        if (sColumn > 0) { // si es == 0 no tiene cuadrado a su izquierda
+            if (!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
                 if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
-                    allSquares[sRow ][sColumn - 1].selectable = true;
-                    visitNeighbours(sRow  ,sColumn - 1); //llamada "recursiva"
+                    allSquares[sRow][sColumn - 1].selectable = true;
+                    visitNeighbours(sRow, sColumn - 1); //llamada "recursiva"
                 } else {
-                    allSquares[sRow ][sColumn - 1].selectable = false;
+                    allSquares[sRow][sColumn - 1].selectable = false;
                 }
             }
         }
+    }
 
 
     private void createSquareRandom() {
@@ -157,6 +158,6 @@ public class TestGridModel {
         int column = randomRow.nextInt(7-0)+0;
         allSquares[row][column].setColor(colors[randomColor.nextInt(4 - 0)]);
     }
-    
+
 
 }
