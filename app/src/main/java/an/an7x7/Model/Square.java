@@ -8,7 +8,7 @@ import android.graphics.Color;
 public class Square {
 
     private int color;
-    private boolean selectable = false;
+    public boolean selectable = false;
     public boolean visited = false;
 
     public Square() {

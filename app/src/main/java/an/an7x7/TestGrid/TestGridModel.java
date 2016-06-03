@@ -42,7 +42,7 @@ public class TestGridModel {
 
         int row, column;
 
-        if (rB <0) {
+        if (rB <0) { // si fila es menor que cero, es que esta fuera (en la parte de arrriba de la pantalla).
 
             row = randomRow.nextInt(7-0)+0;
             column = randomRow.nextInt(7-0)+0;
@@ -60,6 +60,7 @@ public class TestGridModel {
                     selectRow = rB;
                     selectColumn = cB;
                    // Log.d("TEST", "SE HA SELECCIONADO EL CUADRADO: " + rB + " " + cB);
+                    findTargetableLocations();
                 }
 
             }
@@ -76,8 +77,68 @@ public class TestGridModel {
 
     }
 
-    private void findTargetLocation(){
-        
+    public void findTargetableLocations(){
+        for (int row = 0; row < 7; row++)
+            for (int column = 0; column < 7; column++){
+                allSquares[row][column].selectable = false;
+                allSquares[row][column].visited = false;
+            }
+        visitNeighbours(selectRow, selectColumn);
+    }
+
+    private void visitNeighbours(int sRow, int sColumn) {
+
+        //Marco como visitado
+        allSquares[sRow][sColumn].visited = true;
+
+        //compruebo el cuadrado superior
+        if(sRow > 0 ){ // si es == 0 no tiene superior
+            if(!allSquares[sRow - 1][sColumn].visited) { // si el superior aun no ha sido visitado
+                if (allSquares[sRow - 1][sColumn].getColor() == Color.LTGRAY) { // si el superior está vacío
+                    allSquares[sRow - 1][sColumn].selectable = true;
+                    visitNeighbours(sRow-1,sColumn); //llamada "recursiva"
+                } else {
+                    allSquares[sRow - 1][sColumn].selectable = false;
+                }
+            }
+        }
+
+        //compruebo el cuadrado inferior
+        if(sRow < 6 ){ // si es == 6 no tiene inferior
+            if(!allSquares[sRow + 1][sColumn].visited) { // si el inferior aun no ha sido visitado
+                if (allSquares[sRow + 1][sColumn].getColor() == Color.LTGRAY) { // si el inferior está vacío
+                    allSquares[sRow + 1][sColumn].selectable = true;
+                    visitNeighbours(sRow + 1 ,sColumn); //llamada "recursiva"
+                } else {
+                    allSquares[sRow + 1][sColumn].selectable = false;
+                }
+            }
+        }
+
+        //compruebo el cuadrado derecho
+        if(sColumn  < 6 ){ // si es == 6 no tiene cuadrado a su derecha
+            if(!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
+                if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el derecho está vacío
+                    allSquares[sRow ][sColumn + 1].selectable = true;
+                    visitNeighbours(sRow  ,sColumn + 1); //llamada "recursiva"
+                } else {
+                    allSquares[sRow ][sColumn + 1].selectable = false;
+                }
+            }
+        }
+
+        //compruebo el cuadrado izquierdo
+        if(sColumn  > 0 ){ // si es == 0 no tiene cuadrado a su izquierda
+            if(!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
+                if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
+                    allSquares[sRow ][sColumn - 1].selectable = true;
+                    visitNeighbours(sRow  ,sColumn - 1); //llamada "recursiva"
+                } else {
+                    allSquares[sRow ][sColumn - 1].selectable = false;
+                }
+            }
+        }
+
     }
 
 }

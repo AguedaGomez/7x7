@@ -76,10 +76,14 @@ public class TestGridController implements IGameController {
             for (int c = 0; c < BOARD_DIMENSION; c++) {
                 x = column2xScreen(c);
                 y = row2yScreen(r);
-                if (model.state == "selected" && model.selectRow == r && model.selectColumn == c)
-                    graphics.drawRect(x - SQUARE_PADDING * 2, y - SQUARE_PADDING * 2,  squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, model.allSquares[r][c].getColor());
-                else
-                    graphics.drawRect(x, y,  squareSide, squareSide, model.allSquares[r][c].getColor());
+                if (model.state == "selected" && model.selectRow == r && model.selectColumn == c) {
+                    graphics.drawRect(x - SQUARE_PADDING * 2, y - SQUARE_PADDING * 2, squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, model.allSquares[r][c].getColor());
+                }else {
+                    if (!model.allSquares[r][c].selectable && model.allSquares[r][c].getColor() == Color.LTGRAY ){
+                        graphics.drawRect(x, y, squareSide, squareSide, Color.BLACK);
+                    }
+                    graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
+                }
             }
         }
 
