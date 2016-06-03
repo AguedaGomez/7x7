@@ -32,4 +32,8 @@ public class TestGridModel {
 
     }
 
+    private void findTargetLocation(){
+        
+    }
+
 }
