@@ -6,10 +6,12 @@ import android.graphics.Color;
  * Created by Ague on 17/05/2016.
  */
 public class Square {
+
     private int color;
 
     public Square() {
         color = Color.LTGRAY;
+
     }
 
 

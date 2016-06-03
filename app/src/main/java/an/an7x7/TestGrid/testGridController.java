@@ -59,8 +59,8 @@ public class TestGridController implements IGameController {
         for (TouchHandler.TouchEvent touchEvent: touchEvents)
             if (touchEvent.type == TouchHandler.TouchType.TOUCH_UP) {
                 int columnBoard = xScreen2column(touchEvent.x), rowBoard = yScreen2row(touchEvent.y);
-                Log.d("TEST", "y: " + touchEvent.y );
-                Log.d("TEST", "Fila: " + rowBoard + " Columna: " + columnBoard );
+                //Log.d("TEST", "y: " + touchEvent.y );
+                //Log.d("TEST", "Fila: " + rowBoard + " Columna: " + columnBoard );
                 model.onTouch(columnBoard, rowBoard);
             }
 
@@ -76,7 +76,10 @@ public class TestGridController implements IGameController {
             for (int c = 0; c < BOARD_DIMENSION; c++) {
                 x = column2xScreen(c);
                 y = row2yScreen(r);
-                graphics.drawRect(x, y,  squareSide, squareSide, model.allSquares[r][c].getColor());
+                if (model.state == "selected" && model.selectRow == r && model.selectColumn == c)
+                    graphics.drawRect(x - SQUARE_PADDING * 2, y - SQUARE_PADDING * 2,  squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, model.allSquares[r][c].getColor());
+                else
+                    graphics.drawRect(x, y,  squareSide, squareSide, model.allSquares[r][c].getColor());
             }
         }
 
