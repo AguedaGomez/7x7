@@ -139,11 +139,11 @@ public class TestGridModel {
         }
 
         //compruebo el cuadrado derecho
-        if (sColumn < 6) { // si es == 6 no tiene cuadrado a su derecha
-            if (!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
-                if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el derecho está vacío
-                    allSquares[sRow][sColumn + 1].selectable = true;
-                    visitNeighbours(sRow, sColumn + 1); //llamada "recursiva"
+        if(sColumn  < 6 ){ // si es == 6 no tiene cuadrado a su derecha
+            if(!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
+                if (allSquares[sRow][sColumn + 1].getColor() == Color.LTGRAY) { // si el derecho está vacío
+                    allSquares[sRow ][sColumn + 1].selectable = true;
+                    visitNeighbours(sRow  ,sColumn + 1); //llamada "recursiva"
                 } else {
                     allSquares[sRow][sColumn + 1].selectable = false;
                 }
@@ -151,11 +151,11 @@ public class TestGridModel {
         }
 
         //compruebo el cuadrado izquierdo
-        if (sColumn > 0) { // si es == 0 no tiene cuadrado a su izquierda
-            if (!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
-                if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
-                    allSquares[sRow][sColumn - 1].selectable = true;
-                    visitNeighbours(sRow, sColumn - 1); //llamada "recursiva"
+        if(sColumn  > 0 ){ // si es == 0 no tiene cuadrado a su izquierda
+            if(!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
+                if (allSquares[sRow][sColumn - 1].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
+                    allSquares[sRow ][sColumn - 1].selectable = true;
+                    visitNeighbours(sRow  ,sColumn - 1); //llamada "recursiva"
                 } else {
                     allSquares[sRow][sColumn - 1].selectable = false;
                 }
