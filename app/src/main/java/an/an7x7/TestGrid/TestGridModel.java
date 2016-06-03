@@ -11,6 +11,12 @@ import an.an7x7.Model.Square;
  */
 public class TestGridModel {
 
+    private static final int PURPLE = Color.rgb(153,51,255);
+    private static final int BLUE = Color.rgb(51,204,255);
+    private static final int YELLOW = Color.rgb(255,204,0);
+    private static final int GREEN = Color.rgb(128,255,0);
+    private static final int RED = Color.rgb(255,0,0);
+
     public Square[][] allSquares;
     public String state;
     public int selectRow;
@@ -18,6 +24,8 @@ public class TestGridModel {
 
     private Random randomRow;
     private Random randomColumn;
+    private Random randomColor;
+    private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
 
 
 
@@ -26,6 +34,7 @@ public class TestGridModel {
         allSquares = new Square[7][7];
         randomColumn = new Random();
         randomRow = new Random();
+        randomColor = new Random();
         state = "";
         startLevel();
 
@@ -65,15 +74,24 @@ public class TestGridModel {
             }
             else {
                 if (state == "selected") {
+                    int currentColor = allSquares[selectRow][selectColumn].getColor();
                     allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
-                    allSquares[rB][cB].setColor(Color.RED);
+                    allSquares[rB][cB].setColor(currentColor);
                     state = "";
+                    for (int i = 0; i<3; i++)
+                        createSquareRandom();
 
                 }
             }
 
         }
 
+    }
+
+    private void createSquareRandom() {
+        int row = randomRow.nextInt(7-0)+0;
+        int column = randomRow.nextInt(7-0)+0;
+        allSquares[row][column].setColor(colors[randomColor.nextInt(4 - 0)]);
     }
 
     private void findTargetLocation(){
