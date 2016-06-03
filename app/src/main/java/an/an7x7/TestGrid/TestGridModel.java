@@ -89,7 +89,6 @@ public class TestGridModel {
 
     }
 
-<<<<<<< HEAD
     public void findTargetableLocations(){
         for (int row = 0; row < 7; row++)
             for (int column = 0; column < 7; column++){
@@ -152,16 +151,12 @@ public class TestGridModel {
             }
         }
 
-=======
+
     private void createSquareRandom() {
         int row = randomRow.nextInt(7-0)+0;
         int column = randomRow.nextInt(7-0)+0;
         allSquares[row][column].setColor(colors[randomColor.nextInt(4 - 0)]);
     }
-
-    private void findTargetLocation(){
-        
->>>>>>> 3633e6c9aa0c975b7e6fc0ad42ec6afa346ad546
-    }
+    
 
 }
