@@ -104,11 +104,11 @@ public class TestGridModel {
         allSquares[sRow][sColumn].visited = true;
 
         //compruebo el cuadrado superior
-        if(sRow > 0 ){ // si es == 0 no tiene superior
-            if(!allSquares[sRow - 1][sColumn].visited) { // si el superior aun no ha sido visitado
+        if (sRow > 0) { // si es == 0 no tiene superior
+            if (!allSquares[sRow - 1][sColumn].visited) { // si el superior aun no ha sido visitado
                 if (allSquares[sRow - 1][sColumn].getColor() == Color.LTGRAY) { // si el superior está vacío
                     allSquares[sRow - 1][sColumn].selectable = true;
-                    visitNeighbours(sRow-1,sColumn); //llamada "recursiva"
+                    visitNeighbours(sRow - 1, sColumn); //llamada "recursiva"
                 } else {
                     allSquares[sRow - 1][sColumn].selectable = false;
                 }
@@ -116,11 +116,11 @@ public class TestGridModel {
         }
 
         //compruebo el cuadrado inferior
-        if(sRow < 6 ){ // si es == 6 no tiene inferior
-            if(!allSquares[sRow + 1][sColumn].visited) { // si el inferior aun no ha sido visitado
+        if (sRow < 6) { // si es == 6 no tiene inferior
+            if (!allSquares[sRow + 1][sColumn].visited) { // si el inferior aun no ha sido visitado
                 if (allSquares[sRow + 1][sColumn].getColor() == Color.LTGRAY) { // si el inferior está vacío
                     allSquares[sRow + 1][sColumn].selectable = true;
-                    visitNeighbours(sRow + 1 ,sColumn); //llamada "recursiva"
+                    visitNeighbours(sRow + 1, sColumn); //llamada "recursiva"
                 } else {
                     allSquares[sRow + 1][sColumn].selectable = false;
                 }
@@ -134,7 +134,7 @@ public class TestGridModel {
                     allSquares[sRow ][sColumn + 1].selectable = true;
                     visitNeighbours(sRow  ,sColumn + 1); //llamada "recursiva"
                 } else {
-                    allSquares[sRow ][sColumn + 1].selectable = false;
+                    allSquares[sRow][sColumn + 1].selectable = false;
                 }
             }
         }
@@ -146,7 +146,7 @@ public class TestGridModel {
                     allSquares[sRow ][sColumn - 1].selectable = true;
                     visitNeighbours(sRow  ,sColumn - 1); //llamada "recursiva"
                 } else {
-                    allSquares[sRow ][sColumn - 1].selectable = false;
+                    allSquares[sRow][sColumn - 1].selectable = false;
                 }
             }
         }
