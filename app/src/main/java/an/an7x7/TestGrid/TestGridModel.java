@@ -89,7 +89,6 @@ public class TestGridModel {
 
     }
 
-<<<<<<< HEAD
     public void findTargetableLocations(){
         for (int row = 0; row < 7; row++)
             for (int column = 0; column < 7; column++){
@@ -131,7 +130,7 @@ public class TestGridModel {
         //compruebo el cuadrado derecho
         if(sColumn  < 6 ){ // si es == 6 no tiene cuadrado a su derecha
             if(!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
-                if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el derecho está vacío
+                if (allSquares[sRow][sColumn + 1].getColor() == Color.LTGRAY) { // si el derecho está vacío
                     allSquares[sRow ][sColumn + 1].selectable = true;
                     visitNeighbours(sRow  ,sColumn + 1); //llamada "recursiva"
                 } else {
@@ -143,7 +142,7 @@ public class TestGridModel {
         //compruebo el cuadrado izquierdo
         if(sColumn  > 0 ){ // si es == 0 no tiene cuadrado a su izquierda
             if(!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
-                if (allSquares[sRow][sColumn].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
+                if (allSquares[sRow][sColumn - 1].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
                     allSquares[sRow ][sColumn - 1].selectable = true;
                     visitNeighbours(sRow  ,sColumn - 1); //llamada "recursiva"
                 } else {
@@ -151,17 +150,14 @@ public class TestGridModel {
                 }
             }
         }
+    }
 
-=======
+
     private void createSquareRandom() {
         int row = randomRow.nextInt(7-0)+0;
         int column = randomRow.nextInt(7-0)+0;
         allSquares[row][column].setColor(colors[randomColor.nextInt(4 - 0)]);
     }
 
-    private void findTargetLocation(){
-        
->>>>>>> 3633e6c9aa0c975b7e6fc0ad42ec6afa346ad546
-    }
 
 }
