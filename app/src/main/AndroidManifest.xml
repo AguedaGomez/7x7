@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".TestGrid.TestGrid">
+            android:name=".GameCore.Game7x7">
         </activity>
     </application>
 
