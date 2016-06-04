@@ -39,6 +39,11 @@ public class Graphics {
         canvas.drawRect(x, y, x + width - 1, y + height - 1, paint);
     }
 
+    public void drawLine(float initialX, float initialY, float finalX, float finalY, int color){
+        paint.setColor(color);
+        canvas.drawLine(initialX, initialY, finalX, finalY, paint);
+    }
+
     public int getWidth() {
         return frameBuffer.getWidth();
     }
@@ -47,9 +52,6 @@ public class Graphics {
         return frameBuffer.getHeight();
     }
 
-    public void drawBitmap(Bitmap ball, float x, float y) {
-        canvas.drawBitmap(ball,x,y,null);
-    }
 
     public void drawText (String text, float x, float y) {
         paint.setColor(Color.BLACK);
