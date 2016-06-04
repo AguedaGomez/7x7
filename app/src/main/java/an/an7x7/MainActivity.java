@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import an.an7x7.TestGrid.TestGrid;
+import an.an7x7.GameCore.Game7x7;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onTestGrid(View view){
-        Intent intent = new Intent(this, TestGrid.class);
+        Intent intent = new Intent(this, Game7x7.class);
         startActivity(intent);
     }
 }

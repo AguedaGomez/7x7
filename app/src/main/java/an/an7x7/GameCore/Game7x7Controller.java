@@ -1,4 +1,4 @@
-package an.an7x7.TestGrid;
+package an.an7x7.GameCore;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,7 +14,7 @@ import an.an7x7.framework.TouchHandler;
 /**
  * Created by NachoLR on 10/05/2016.
  */
-public class TestGridController implements IGameController {
+public class Game7x7Controller implements IGameController {
 
     private static final float SQUARE_PADDING = 2;
     private static final int BOARD_DIMENSION = 7;
@@ -25,9 +25,9 @@ public class TestGridController implements IGameController {
     private final float squareSide;
 
     private Graphics graphics;
-    private TestGridModel model;
+    private Game7x7Model model;
 
-    public TestGridController(float screenWidth, float screenHeight, Context context){
+    public Game7x7Controller(float screenWidth, float screenHeight, Context context){
 
         this.width = screenWidth;
         this.height = screenHeight;
@@ -35,7 +35,7 @@ public class TestGridController implements IGameController {
         squareSide = screenWidth/7 - SQUARE_PADDING;
         Log.d("TEST", "Alto: " + height + " Cuadrado: " + squareSide);
         graphics = new Graphics((int) width, (int) height);
-        model = new TestGridModel();
+        model = new Game7x7Model();
     }
 
     private int xScreen2column(float xScreen){
@@ -78,10 +78,10 @@ public class TestGridController implements IGameController {
                 x = column2xScreen(c);
                 y = row2yScreen(r);
 
-                if (model.state == TestGridModel.State.SQUARE_SELECTED && model.selectRow == r && model.selectColumn == c) {
+                if (model.state == Game7x7Model.State.SQUARE_SELECTED && model.selectRow == r && model.selectColumn == c) {
                     graphics.drawRect(x - SQUARE_PADDING * 2, y - SQUARE_PADDING * 2, squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, model.allSquares[r][c].getColor());
                 }
-                else if(model.state == TestGridModel.State.SQUARE_SELECTED){
+                else if(model.state == Game7x7Model.State.SQUARE_SELECTED){
                     if (!model.allSquares[r][c].selectable && model.allSquares[r][c].getColor() == Color.LTGRAY ){
                         graphics.drawRect(x, y, squareSide, squareSide, Color.LTGRAY);
                         graphics.drawLine(x, y, x + squareSide, y + squareSide, Color.WHITE);
@@ -91,7 +91,7 @@ public class TestGridController implements IGameController {
                         graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
                     }
                 }
-                else if (model.state == TestGridModel.State.SQUARES_APPEAR && model.selectRow == r && model.selectColumn == c){
+                else if (model.state == Game7x7Model.State.SQUARES_APPEAR && model.selectRow == r && model.selectColumn == c){
                     graphics.drawRect(x - SQUARE_PADDING * model.differencePositionBigSquare, y - SQUARE_PADDING * model.differencePositionBigSquare, squareSide + SQUARE_PADDING * model.differenceSideBigSquare, squareSide + SQUARE_PADDING * model.differenceSideBigSquare, model.allSquares[r][c].getColor());
                 }
                 else {

@@ -1,4 +1,4 @@
-package an.an7x7.TestGrid;
+package an.an7x7.GameCore;
 
 import android.graphics.Color;
 import android.util.Log;
@@ -14,7 +14,7 @@ import an.an7x7.Utilities.EndGameDialogFragment;
 /**
  * Created by NachoLR on 10/05/2016.
  */
-public class TestGridModel {
+public class Game7x7Model {
 
 
     public enum State {
@@ -42,7 +42,7 @@ public class TestGridModel {
     private int newSquaresCounter = 1;
 
 
-    public TestGridModel(){
+    public Game7x7Model(){
 
         allSquares = new Square[7][7];
         availablePositions = new ArrayList<String>();
@@ -99,7 +99,11 @@ public class TestGridModel {
     }
 
     private void updateEndGame(float deltaTime) {
-        EndGameDialogFragment alertDialog = new EndGameDialogFragment();
+        //EndGameDialogFragment alertDialog = new EndGameDialogFragment();
+
+        //FragmentManager fm =  super(activity.getFragmentManager());
+        EndGameDialogFragment dialogFragment = new EndGameDialogFragment ();
+       // dialogFragment.show(fm, "Sample Fragment");
 
     }
 
