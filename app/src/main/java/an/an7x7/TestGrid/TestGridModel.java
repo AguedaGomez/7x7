@@ -1,18 +1,26 @@
 package an.an7x7.TestGrid;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.StringTokenizer;
 
 import an.an7x7.Model.Square;
+import an.an7x7.Utilities.EndGameDialogFragment;
 
 /**
  * Created by NachoLR on 10/05/2016.
  */
 public class TestGridModel {
+
+
+    public enum State {
+        ON_GAME,
+        SQUARE_SELECTED,
+        END_GAME;
+    }
 
     private static final int PURPLE = Color.rgb(153,51,255);
     private static final int BLUE = Color.rgb(51,204,255);
@@ -21,15 +29,15 @@ public class TestGridModel {
     private static final int RED = Color.rgb(255,0,0);
 
     public Square[][] allSquares;
-    public String state;
     public int selectRow;
     public int selectColumn;
+    public State state;
 
     private Random randomPosition;
     private Random randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
-    private StringTokenizer stPosition;
+
 
 
 
@@ -39,7 +47,7 @@ public class TestGridModel {
         availablePositions = new ArrayList<String>();
         randomPosition = new Random();
         randomColor = new Random();
-        state = "";
+        state = State.ON_GAME;
         startLevel();
 
     }
@@ -56,9 +64,32 @@ public class TestGridModel {
 
     }
 
-    public void onTouch(int cB, int rB) {
+    public void update(float deltaTime) {
+       switch (state) {
+           case ON_GAME:
+               updateGame(deltaTime);
+               break;
+           case END_GAME:
+               updateEndGame(deltaTime);
+               break;
+       }
+    }
 
-        int row, column;
+    private void updateEndGame(float deltaTime) {
+        EndGameDialogFragment alertDialog = new EndGameDialogFragment();
+
+    }
+
+    private void updateGame(float deltaTime) {
+        if (availablePositions.isEmpty()) {
+            state = State.END_GAME;
+            Log.d("TEST", "FIN JUEGO");
+        }
+
+    }
+
+
+    public void onTouch(int cB, int rB) {
 
         if (rB <0) { // si fila es menor que cero, es que esta fuera (en la parte de arrriba de la pantalla).
 
@@ -67,12 +98,12 @@ public class TestGridModel {
         }
         else {
             if (allSquares[rB][cB].getColor() != Color.LTGRAY) {
-                if (state == "selected") {
-                    state = "";
+                if (state == State.SQUARE_SELECTED) {
+                    state = State.ON_GAME;
                 }
                 else {
 
-                    state = "selected";
+                    state = State.SQUARE_SELECTED;
                     selectRow = rB;
                     selectColumn = cB;
                    // Log.d("TEST", "SE HA SELECCIONADO EL CUADRADO: " + rB + " " + cB);
@@ -81,7 +112,7 @@ public class TestGridModel {
 
             }
             else {
-                if (state == "selected") {
+                if (state == State.SQUARE_SELECTED) {
                     int currentColor = allSquares[selectRow][selectColumn].getColor();
                     allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
 
@@ -89,7 +120,7 @@ public class TestGridModel {
                     allSquares[rB][cB].setColor(currentColor);
                     availablePositions.remove("" + rB + cB);
 
-                    state = "";
+                    state = State.ON_GAME;
                     for (int i = 0; i<3; i++)
                         createSquareRandom();
 
