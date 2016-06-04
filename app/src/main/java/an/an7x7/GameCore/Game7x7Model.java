@@ -20,6 +20,7 @@ public class Game7x7Model {
     public enum State {
         ON_GAME,
         SQUARES_APPEAR,
+        SQUARES_DESAPPEAR,
         SQUARE_SELECTED,
         END_GAME;
     }
@@ -34,6 +35,7 @@ public class Game7x7Model {
     public int selectRow, selectColumn;
     public State state;
     public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
+    public int difPosBigTransparentSquare = 10,  difSideBigTransparentSquare = 20;
 
     private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
@@ -71,10 +73,27 @@ public class Game7x7Model {
            case SQUARES_APPEAR:
                updateSquaresAppear(deltaTime);
                break;
+           case SQUARES_DESAPPEAR:
+               updateSquaresDesappear(deltaTime);
            case END_GAME:
                updateEndGame(deltaTime);
                break;
        }
+    }
+
+    private void updateSquaresDesappear(float deltaTime) {
+        if (difPosBigTransparentSquare <= 0 && difSideBigTransparentSquare <= 0) {
+            eraseLine();
+            difPosBigTransparentSquare=10;
+            difSideBigTransparentSquare=20;
+            state = State.ON_GAME;
+        }
+        else {
+            difPosBigTransparentSquare-=1;
+            difSideBigTransparentSquare-=2;
+
+        }
+
     }
 
     private void updateSquaresAppear(float deltaTime) {
@@ -152,8 +171,9 @@ public class Game7x7Model {
                         allSquares[rB][cB].setColor(currentColor);
                         availablePositions.remove("" + rB + cB);
                         if (lineChecker.checkForLine(rB, cB, allSquares)) {
-                            eraseLine();
-                            state = State.ON_GAME;
+                            state = State.SQUARES_DESAPPEAR;
+                            //eraseLine();
+
                         } // revisar si este movimiento puntua.
 
                         else {

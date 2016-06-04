@@ -3,7 +3,6 @@ package an.an7x7.GameCore;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
 
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class Game7x7Controller implements IGameController {
         this.height = screenHeight;
         this.context = context;
         squareSide = screenWidth/7 - SQUARE_PADDING;
-        Log.d("TEST", "Alto: " + height + " Cuadrado: " + squareSide);
         graphics = new Graphics((int) width, (int) height);
         model = new Game7x7Model();
     }
@@ -59,8 +57,6 @@ public class Game7x7Controller implements IGameController {
         for (TouchHandler.TouchEvent touchEvent: touchEvents)
             if (touchEvent.type == TouchHandler.TouchType.TOUCH_UP) {
                 int columnBoard = xScreen2column(touchEvent.x), rowBoard = yScreen2row(touchEvent.y);
-                //Log.d("TEST", "y: " + touchEvent.y );
-                //Log.d("TEST", "Fila: " + rowBoard + " Columna: " + columnBoard );
                 model.onTouch(columnBoard, rowBoard);
             }
         model.update(deltaTime);
@@ -92,7 +88,16 @@ public class Game7x7Controller implements IGameController {
                     }
                 }
                 else if (model.state == Game7x7Model.State.SQUARES_APPEAR && model.selectRow == r && model.selectColumn == c){
-                    graphics.drawRect(x - SQUARE_PADDING * model.differencePositionBigSquare, y - SQUARE_PADDING * model.differencePositionBigSquare, squareSide + SQUARE_PADDING * model.differenceSideBigSquare, squareSide + SQUARE_PADDING * model.differenceSideBigSquare, model.allSquares[r][c].getColor());
+                    float coordx = x - SQUARE_PADDING * model.differencePositionBigSquare;
+                    float coordy = y - SQUARE_PADDING * model.differencePositionBigSquare;
+                    float side =  squareSide + SQUARE_PADDING * model.differenceSideBigSquare;
+                    graphics.drawRect(coordx,coordy, side, side, model.allSquares[r][c].getColor());
+                }
+                else if (model.state == Game7x7Model.State.SQUARES_DESAPPEAR && model.allSquares[r][c].erasable) {
+                    float coordx = x-SQUARE_PADDING * model.difPosBigTransparentSquare;
+                    float coordy = y-SQUARE_PADDING * model.difPosBigTransparentSquare;
+                    float side = squareSide+ SQUARE_PADDING * model.difSideBigTransparentSquare;
+                    graphics.drawRect(coordx ,coordy ,side , side, model.allSquares[r][c].getColor());
                 }
                 else {
                     graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
