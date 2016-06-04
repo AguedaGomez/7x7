@@ -42,8 +42,6 @@ public class TestGridModel {
     private int newSquaresCounter = 1;
 
 
-
-
     public TestGridModel(){
 
         allSquares = new Square[7][7];
@@ -133,7 +131,7 @@ public class TestGridModel {
                     state = State.SQUARE_SELECTED;
                     selectRow = rB;
                     selectColumn = cB;
-                   // Log.d("TEST", "SE HA SELECCIONADO EL CUADRADO: " + rB + " " + cB);
+
                     findTargetableLocations();
                 }
 
@@ -141,24 +139,24 @@ public class TestGridModel {
 
             else {
                 if (state == State.SQUARE_SELECTED) {
-                    int currentColor = allSquares[selectRow][selectColumn].getColor();
-                    allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
+                    if (allSquares[rB][cB].selectable) {
 
-                    availablePositions.add("" + selectRow + selectColumn);
-                    allSquares[rB][cB].setColor(currentColor);
-                    availablePositions.remove("" + rB + cB);
-                    if(lineChecker.checkForLine(rB,cB,allSquares)){
-                        eraseLine();
-                        state = State.ON_GAME;
-                    } // revisar si este movimiento puntua.
+                        int currentColor = allSquares[selectRow][selectColumn].getColor();
+                        allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
 
-                    else {
-                        state = State.SQUARES_APPEAR;
-                        createSquareRandom();
+                        availablePositions.add("" + selectRow + selectColumn);
+                        allSquares[rB][cB].setColor(currentColor);
+                        availablePositions.remove("" + rB + cB);
+                        if (lineChecker.checkForLine(rB, cB, allSquares)) {
+                            eraseLine();
+                            state = State.ON_GAME;
+                        } // revisar si este movimiento puntua.
+
+                        else {
+                            state = State.SQUARES_APPEAR;
+                            createSquareRandom();
+                        }
                     }
-
-
-
                 }
             }
 
