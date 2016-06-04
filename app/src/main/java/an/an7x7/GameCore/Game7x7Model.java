@@ -62,6 +62,7 @@ public class Game7x7Model {
                 String position = "" + row  + column;
                 availablePositions.add(position);
             }
+        state = State.SQUARES_APPEAR;
     }
 
     public void update(float deltaTime) {
@@ -118,7 +119,7 @@ public class Game7x7Model {
         }
     }
 
-    
+
 
     private void updateGame(float deltaTime) {
         if (availablePositions.isEmpty()) {
@@ -131,13 +132,7 @@ public class Game7x7Model {
 
     public void onTouch(int cB, int rB) {
 
-        if (rB <0) { // si fila es menor que cero, es que esta fuera (en la parte de arrriba de la pantalla).
-
-           state = State.SQUARES_APPEAR;
-            createSquareRandom();
-
-        }
-        else {
+        if (rB >=0) { // sólo responder si se toca dentro del tablero
 
             if (allSquares[rB][cB].getColor() != Color.LTGRAY) {
                 if (state == State.SQUARE_SELECTED) {
@@ -164,6 +159,7 @@ public class Game7x7Model {
                         availablePositions.add("" + selectRow + selectColumn);
                         allSquares[rB][cB].setColor(currentColor);
                         availablePositions.remove("" + rB + cB);
+
                         if (lineChecker.checkForLine(rB, cB, allSquares)) {
                             state = State.SQUARES_DESAPPEAR;
                             //eraseLine();
