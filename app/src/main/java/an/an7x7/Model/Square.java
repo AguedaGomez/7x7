@@ -10,10 +10,14 @@ public class Square {
     private int color;
     public boolean selectable = false;
     public boolean visited = false;
+    public boolean erasable = false;
+    public int myRow;
+    public int myColumn;
 
-    public Square() {
+    public Square(int r, int c) {
         color = Color.LTGRAY;
-
+        myRow = r;
+        myColumn = c;
     }
 
 

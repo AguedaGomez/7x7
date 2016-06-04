@@ -55,13 +55,10 @@ public class TestGridModel {
     private void startLevel() {
         for (int row = 0; row < 7; row++)
             for (int column = 0; column < 7; column++) {
-                allSquares[row][column] = new Square();
+                allSquares[row][column] = new Square(row,column);
                 String position = "" + row  + column;
                 availablePositions.add(position);
             }
-
-
-
     }
 
     public void update(float deltaTime) {
@@ -97,6 +94,7 @@ public class TestGridModel {
 
         }
         else {
+
             if (allSquares[rB][cB].getColor() != Color.LTGRAY) {
                 if (state == State.SQUARE_SELECTED) {
                     state = State.ON_GAME;
@@ -111,6 +109,7 @@ public class TestGridModel {
                 }
 
             }
+
             else {
                 if (state == State.SQUARE_SELECTED) {
                     int currentColor = allSquares[selectRow][selectColumn].getColor();
@@ -128,6 +127,69 @@ public class TestGridModel {
             }
 
         }
+
+    }
+
+    private void checkForLine(int row, int column) {
+
+        for (int r = 0; r < 7; r++)
+            for (int c = 0; c < 7; c++){
+                allSquares[r][c].erasable = false;
+                allSquares[r][c].visited = false;
+            }
+
+        //Comprobar las cuatro direcciones (dos diagonales, horizontal y vertical)
+        int colorCheck = allSquares[row][column].getColor();
+        checkPositiveDiagonal(row, column);
+        checkNegativeDiagonal(row, column);
+        checkVerticalLine(row, column);
+        checkHorizontalLine(row,column,colorCheck);
+
+    }
+
+    private int checkHorizontalLine(int row, int column, int color) {
+
+        allSquares[row][column].visited = true; // me marco como visitado.
+
+            if (allSquares[row][column].getColor() == color) {
+                if (column + 1 <= 6 && column-1 >= 0) {
+                    if (allSquares[row][column + 1].visited && !allSquares[row][column - 1].visited) { // si el de la derecha ya ha sido visitado y el de la izquierda no.
+                        return (1 + checkHorizontalLine(row, column - 1, color)); // compruebo al de la izquierda.
+                    } else if (allSquares[row][column - 1].visited && !allSquares[row][column + 1].visited) { // si el de la izquierda ya ha sido visitado y el de la derecha no:
+                        return (1 + checkHorizontalLine(row, column + 1, color)); // compruebo al de la derecha.
+                    } else {
+                        return (1 + checkHorizontalLine(row, column + 1, color) + checkHorizontalLine(row, column - 1, color)); // si las dos anteriores dan falso, los dos vecinos están sin visitar.
+                    }
+                }else if(column  == 6){ // CASO BASE de la recursividad, el siguiente cuadrado a la derecha no existe. No hay que hacer más llamadas hacia la derecha.
+                    if (!allSquares[row][column-1].visited){
+                        return (1 + checkHorizontalLine(row, column - 1, color ));
+                    }else{
+                        return 1;
+                    }
+                }else if (column == 0){ // CASO BASE de la recursividad, el siguiente cuadrado a la izquierda no existe. No hay que hacer más llamadas hacia la izquierda.
+                    if (!allSquares[row][column+1].visited){
+                        return (1 + checkHorizontalLine(row, column + 1, color ));
+                    }else{
+                        return 1;
+                    }
+                }else{
+                    return 1;
+                }
+            } else {
+                return 0; // CASO BASE de la recursividad, el cuadrado es de otro color.
+            }
+
+    }
+
+    private void checkVerticalLine(int row, int column) {
+
+    }
+
+    private void checkNegativeDiagonal(int row, int column) {
+
+    }
+
+    private void checkPositiveDiagonal(int row, int column) {
 
     }
 
