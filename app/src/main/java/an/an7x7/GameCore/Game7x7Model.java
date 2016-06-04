@@ -9,7 +9,6 @@ import java.util.Random;
 
 import an.an7x7.Model.LineChecker;
 import an.an7x7.Model.Square;
-import an.an7x7.Utilities.EndGameDialogFragment;
 
 /**
  * Created by NachoLR on 10/05/2016.
@@ -75,9 +74,6 @@ public class Game7x7Model {
                break;
            case SQUARES_DESAPPEAR:
                updateSquaresDesappear(deltaTime);
-           case END_GAME:
-               updateEndGame(deltaTime);
-               break;
        }
     }
 
@@ -99,13 +95,18 @@ public class Game7x7Model {
     private void updateSquaresAppear(float deltaTime) {
 
         if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) {
-            if (newSquaresCounter == 3) {
+            if (newSquaresCounter == 3) { // ESTO VA EN FUNCION DEL NIVEL ------------PROVISONAL--------------------
                 state = State.ON_GAME;
                 newSquaresCounter = 1;
             }
             else {
+                if(availablePositions.isEmpty()){
+                    state = State.END_GAME;
+                    Log.d("TEST", "FIN JUEGO");
+                }else{
                 createSquareRandom();
                 newSquaresCounter++;
+                }
             }
             differenceSideBigSquare = 20;
             differencePositionBigSquare = 10;
@@ -117,14 +118,7 @@ public class Game7x7Model {
         }
     }
 
-    private void updateEndGame(float deltaTime) {
-        //EndGameDialogFragment alertDialog = new EndGameDialogFragment();
-
-        //FragmentManager fm =  super(activity.getFragmentManager());
-        EndGameDialogFragment dialogFragment = new EndGameDialogFragment ();
-       // dialogFragment.show(fm, "Sample Fragment");
-
-    }
+    
 
     private void updateGame(float deltaTime) {
         if (availablePositions.isEmpty()) {
