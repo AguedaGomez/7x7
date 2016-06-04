@@ -1,7 +1,5 @@
 package an.an7x7.GameCore;
 
-import android.app.Activity;
-import android.app.FragmentManager;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -42,8 +40,6 @@ public class Game7x7Model {
     private List<String> availablePositions;
     private LineChecker lineChecker;
     private int newSquaresCounter = 1;
-
-
 
 
     public Game7x7Model(){
@@ -139,7 +135,7 @@ public class Game7x7Model {
                     state = State.SQUARE_SELECTED;
                     selectRow = rB;
                     selectColumn = cB;
-                   // Log.d("TEST", "SE HA SELECCIONADO EL CUADRADO: " + rB + " " + cB);
+
                     findTargetableLocations();
                 }
 
@@ -147,24 +143,24 @@ public class Game7x7Model {
 
             else {
                 if (state == State.SQUARE_SELECTED) {
-                    int currentColor = allSquares[selectRow][selectColumn].getColor();
-                    allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
+                    if (allSquares[rB][cB].selectable) {
 
-                    availablePositions.add("" + selectRow + selectColumn);
-                    allSquares[rB][cB].setColor(currentColor);
-                    availablePositions.remove("" + rB + cB);
-                    if(lineChecker.checkForLine(rB,cB,allSquares)){
-                        eraseLine();
-                        state = State.ON_GAME;
-                    } // revisar si este movimiento puntua.
+                        int currentColor = allSquares[selectRow][selectColumn].getColor();
+                        allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
 
-                    else {
-                        state = State.SQUARES_APPEAR;
-                        createSquareRandom();
+                        availablePositions.add("" + selectRow + selectColumn);
+                        allSquares[rB][cB].setColor(currentColor);
+                        availablePositions.remove("" + rB + cB);
+                        if (lineChecker.checkForLine(rB, cB, allSquares)) {
+                            eraseLine();
+                            state = State.ON_GAME;
+                        } // revisar si este movimiento puntua.
+
+                        else {
+                            state = State.SQUARES_APPEAR;
+                            createSquareRandom();
+                        }
                     }
-
-
-
                 }
             }
 

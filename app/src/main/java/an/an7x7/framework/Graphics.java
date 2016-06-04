@@ -41,6 +41,7 @@ public class Graphics {
 
     public void drawLine(float initialX, float initialY, float finalX, float finalY, int color){
         paint.setColor(color);
+        paint.setStrokeWidth(2);
         canvas.drawLine(initialX, initialY, finalX, finalY, paint);
     }
 
