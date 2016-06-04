@@ -2,7 +2,10 @@ package an.an7x7.TestGrid;
 
 import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.StringTokenizer;
 
 import an.an7x7.Model.Square;
 
@@ -22,18 +25,19 @@ public class TestGridModel {
     public int selectRow;
     public int selectColumn;
 
-    private Random randomRow;
-    private Random randomColumn;
+    private Random randomPosition;
     private Random randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
+    private List<String> availablePositions;
+    private StringTokenizer stPosition;
 
 
 
     public TestGridModel(){
 
         allSquares = new Square[7][7];
-        randomColumn = new Random();
-        randomRow = new Random();
+        availablePositions = new ArrayList<String>();
+        randomPosition = new Random();
         randomColor = new Random();
         state = "";
         startLevel();
@@ -42,9 +46,11 @@ public class TestGridModel {
 
     private void startLevel() {
         for (int row = 0; row < 7; row++)
-            for (int column = 0; column < 7; column++)
+            for (int column = 0; column < 7; column++) {
                 allSquares[row][column] = new Square(row,column);
-
+                String position = "" + row  + column;
+                availablePositions.add(position);
+            }
     }
 
     public void onTouch(int cB, int rB) {
@@ -53,9 +59,7 @@ public class TestGridModel {
 
         if (rB <0) { // si fila es menor que cero, es que esta fuera (en la parte de arrriba de la pantalla).
 
-            row = randomRow.nextInt(7-0)+0;
-            column = randomRow.nextInt(7-0)+0;
-            allSquares[row][column].setColor(Color.RED);
+           createSquareRandom();
 
         }
         else {
@@ -73,16 +77,18 @@ public class TestGridModel {
                 }
 
             }
-            else { // Caso: Selecciona un cuadrado Gris
-                if (state == "selected") { // Si además ya tenía seleccionado un cuadrado de color
-                    int currentColor = allSquares[selectRow][selectColumn].getColor(); // nos guardamos el color seleccionado
-                    allSquares[selectRow][selectColumn].setColor(Color.LTGRAY); //ponemos la posicion donde estaba en gris
-                    allSquares[rB][cB].setColor(currentColor); // coloreamos la nueva posicion del color guardado
-                    state = ""; // ya no hay ningún cuadrado seleccionado
 
-                    checkForLine(rB,cB);
+            else {
+                if (state == "selected") {
+                    int currentColor = allSquares[selectRow][selectColumn].getColor();
+                    allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
 
-                    for (int i = 0; i<3; i++) // creamos tres cuadrados nuevos (esto irá en funcion del nivel) ------------PROVISIONAL---------
+                    availablePositions.add("" + selectRow + selectColumn);
+                    allSquares[rB][cB].setColor(currentColor);
+                    availablePositions.remove("" + rB + cB);
+
+                    state = "";
+                    for (int i = 0; i<3; i++)
                         createSquareRandom();
 
                 }
@@ -220,9 +226,14 @@ public class TestGridModel {
 
 
     private void createSquareRandom() {
-        int row = randomRow.nextInt(7-0)+0;
-        int column = randomRow.nextInt(7-0)+0;
-        allSquares[row][column].setColor(colors[randomColor.nextInt(4 - 0)]);
+        int pos = randomPosition.nextInt(availablePositions.size()-0);
+        String position = availablePositions.get(pos);
+        //Log.d("TEST", "POSICION: " + position);
+        int row =  Character.getNumericValue(position.charAt(0));
+        int column = Character.getNumericValue(position.charAt(1));
+        allSquares[row][column].setColor(colors[randomColor.nextInt(5 - 0)]);
+        availablePositions.remove(pos);
+        //Log.d("TEST", "LONGITUD DE LA LISTA: " + availablePositions.size());
     }
 
 
