@@ -32,7 +32,12 @@ public class Graphics {
     public void clear(int color) {
         canvas.drawRGB((color & 0xff0000) >> 16, (color & 0xff00) >> 8, color & 0xff);
     }
-
+    public void drawRectStroke( float x, float y, float width, float height, int color) {
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(color);
+        paint.setStrokeWidth(3);
+        canvas.drawRect(x, y, x + width - 1, y + height - 1, paint);
+    }
     public void drawRect(float x, float y, float width, float height, int color) {
         paint.setColor(color);
         paint.setStyle(Paint.Style.FILL);

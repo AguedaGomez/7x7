@@ -78,8 +78,17 @@ public class Game7x7Controller implements IGameController {
 
     @Override
     public Bitmap onDrawingRequested() {
+
         graphics.clear(Color.WHITE);
-        float x,y;
+        float x, y, xprev, yprev;
+
+        for (int i = 0; i < 2; i++ ) {
+            for (int j = 3; j > 0; j--) {
+                xprev = width - (j*(squareSide/1.5f) + (j-1)*SQUARE_PADDING*2 + 40);
+                yprev = 200 + i * (squareSide/1.5f + SQUARE_PADDING*2);
+                graphics.drawRectStroke(xprev, yprev, squareSide/1.5f, squareSide/1.5f, Color.LTGRAY);
+            }
+        }
         for(int r = 0 ; r < BOARD_DIMENSION; r++) {
             for (int c = 0; c < BOARD_DIMENSION; c++) {
                 x = column2xScreen(c);
