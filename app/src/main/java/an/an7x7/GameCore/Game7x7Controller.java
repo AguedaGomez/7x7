@@ -83,7 +83,9 @@ public class Game7x7Controller implements IGameController {
                 }
                 else if(model.state == Game7x7Model.State.SQUARE_SELECTED){
                     if (!model.allSquares[r][c].selectable && model.allSquares[r][c].getColor() == Color.LTGRAY ){
-                      graphics.drawRect(x, y, squareSide, squareSide, Color.BLACK);
+                        graphics.drawRect(x, y, squareSide, squareSide, Color.LTGRAY);
+                        graphics.drawLine(x, y, x + squareSide, y + squareSide, Color.WHITE);
+                        graphics.drawLine(x + squareSide, y, x, y + squareSide, Color.WHITE);
                     }
                     else{
                         graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
