@@ -6,11 +6,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
-import an.an7x7.R;
 
 /**
  * Created by Ague on 04/06/2016.
@@ -26,7 +22,7 @@ public class EndGameDialogFragment extends DialogFragment {
                 .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+                        ((DialogFragment)getActivity())
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {

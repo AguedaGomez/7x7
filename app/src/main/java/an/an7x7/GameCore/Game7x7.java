@@ -18,4 +18,9 @@ public class Game7x7 extends GameActivity {
         testController = new Game7x7Controller( displayMetrics.widthPixels, displayMetrics.heightPixels,this,this.getFragmentManager());
         return testController;
     }
+
+    public void aversifunciona(){
+
+
+    }
 }
