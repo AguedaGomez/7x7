@@ -19,6 +19,7 @@ public class TestGridModel {
 
     public enum State {
         ON_GAME,
+        SQUARES_APPEAR,
         SQUARE_SELECTED,
         END_GAME;
     }
@@ -30,15 +31,15 @@ public class TestGridModel {
     private static final int RED = Color.rgb(255,0,0);
 
     public Square[][] allSquares;
-    public int selectRow;
-    public int selectColumn;
+    public int selectRow, selectColumn;
     public State state;
+    public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
 
-    private Random randomPosition;
-    private Random randomColor;
+    private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
+    private int newSquaresCounter = 1;
 
 
 
@@ -69,10 +70,34 @@ public class TestGridModel {
            case ON_GAME:
                updateGame(deltaTime);
                break;
+           case SQUARES_APPEAR:
+               updateSquaresAppear(deltaTime);
+               break;
            case END_GAME:
                updateEndGame(deltaTime);
                break;
        }
+    }
+
+    private void updateSquaresAppear(float deltaTime) {
+
+        if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) {
+            if (newSquaresCounter == 3) {
+                state = State.ON_GAME;
+                newSquaresCounter = 1;
+            }
+            else {
+                createSquareRandom();
+                newSquaresCounter++;
+            }
+            differenceSideBigSquare = 20;
+            differencePositionBigSquare = 10;
+        }
+        else {
+            differenceSideBigSquare-=4;
+            differencePositionBigSquare-=2;
+
+        }
     }
 
     private void updateEndGame(float deltaTime) {
@@ -93,7 +118,8 @@ public class TestGridModel {
 
         if (rB <0) { // si fila es menor que cero, es que esta fuera (en la parte de arrriba de la pantalla).
 
-           createSquareRandom();
+           state = State.SQUARES_APPEAR;
+            createSquareRandom();
 
         }
         else {
@@ -123,11 +149,15 @@ public class TestGridModel {
                     availablePositions.remove("" + rB + cB);
                     if(lineChecker.checkForLine(rB,cB,allSquares)){
                         eraseLine();
+                        state = State.ON_GAME;
                     } // revisar si este movimiento puntua.
 
-                    state = State.ON_GAME;
-                    for (int i = 0; i<3; i++)
+                    else {
+                        state = State.SQUARES_APPEAR;
                         createSquareRandom();
+                    }
+
+
 
                 }
             }
@@ -212,14 +242,21 @@ public class TestGridModel {
 
 
     private void createSquareRandom() {
+
         int pos = randomPosition.nextInt(availablePositions.size()-0);
         String position = availablePositions.get(pos);
-        //Log.d("TEST", "POSICION: " + position);
         int row =  Character.getNumericValue(position.charAt(0));
         int column = Character.getNumericValue(position.charAt(1));
+        selectColumn = column;
+        selectRow = row;
+
         allSquares[row][column].setColor(colors[randomColor.nextInt(5 - 0)]);
         availablePositions.remove(pos);
-        //Log.d("TEST", "LONGITUD DE LA LISTA: " + availablePositions.size());
+
+        if(lineChecker.checkForLine(row,column,allSquares)){
+            eraseLine();
+        }
+
     }
 
 
