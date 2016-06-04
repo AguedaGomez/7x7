@@ -75,22 +75,24 @@ public class Game7x7Model {
            case SQUARES_APPEAR:
                updateSquaresAppear(deltaTime);
                break;
-           case END_GAME:
-               updateEndGame(deltaTime);
-               break;
        }
     }
 
     private void updateSquaresAppear(float deltaTime) {
 
         if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) {
-            if (newSquaresCounter == 3) {
+            if (newSquaresCounter == 3) { // ESTO VA EN FUNCION DEL NIVEL ------------PROVISONAL--------------------
                 state = State.ON_GAME;
                 newSquaresCounter = 1;
             }
             else {
+                if(availablePositions.isEmpty()){
+                    state = State.END_GAME;
+                    Log.d("TEST", "FIN JUEGO");
+                }else{
                 createSquareRandom();
                 newSquaresCounter++;
+                }
             }
             differenceSideBigSquare = 20;
             differencePositionBigSquare = 10;
@@ -105,9 +107,7 @@ public class Game7x7Model {
     private void updateEndGame(float deltaTime) {
         //EndGameDialogFragment alertDialog = new EndGameDialogFragment();
 
-        //FragmentManager fm =  super(activity.getFragmentManager());
-        EndGameDialogFragment dialogFragment = new EndGameDialogFragment ();
-       // dialogFragment.show(fm, "Sample Fragment");
+
 
     }
 

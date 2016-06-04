@@ -15,7 +15,7 @@ public class Game7x7 extends GameActivity {
     protected IGameController buildGameController() {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        testController = new Game7x7Controller( displayMetrics.widthPixels, displayMetrics.heightPixels,this);
+        testController = new Game7x7Controller( displayMetrics.widthPixels, displayMetrics.heightPixels,this,this.getFragmentManager());
         return testController;
     }
 }

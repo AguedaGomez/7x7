@@ -1,5 +1,7 @@
 package an.an7x7.GameCore;
 
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -7,6 +9,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import an.an7x7.Utilities.EndGameDialogFragment;
 import an.an7x7.framework.Graphics;
 import an.an7x7.framework.IGameController;
 import an.an7x7.framework.TouchHandler;
@@ -22,16 +25,19 @@ public class Game7x7Controller implements IGameController {
     private final float width;
     private final float height;
     private final Context context;
+    private final FragmentManager fm;
     private final float squareSide;
 
     private Graphics graphics;
     private Game7x7Model model;
+    private boolean dialogNotCreated = true;
 
-    public Game7x7Controller(float screenWidth, float screenHeight, Context context){
+    public Game7x7Controller(float screenWidth, float screenHeight, Context context, FragmentManager fm){
 
         this.width = screenWidth;
         this.height = screenHeight;
         this.context = context;
+        this.fm = fm;
         squareSide = screenWidth/7 - SQUARE_PADDING;
         Log.d("TEST", "Alto: " + height + " Cuadrado: " + squareSide);
         graphics = new Graphics((int) width, (int) height);
@@ -64,6 +70,12 @@ public class Game7x7Controller implements IGameController {
                 model.onTouch(columnBoard, rowBoard);
             }
         model.update(deltaTime);
+
+        if (model.state == Game7x7Model.State.END_GAME && dialogNotCreated){
+            dialogNotCreated = false;
+            EndGameDialogFragment dialogFragment = new EndGameDialogFragment ();
+            dialogFragment.show(fm, "Sample Fragment");
+        }
 
     }
 
