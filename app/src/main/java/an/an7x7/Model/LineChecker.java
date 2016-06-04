@@ -33,7 +33,7 @@ public class LineChecker {
         linesPerformed++;
         }
 
-        if (checkVerticalLine(row,column,colorCheck) >= 4){ // si hay linea horizontal.
+        if (checkVerticalLine(row, column, colorCheck) >= 4){ // si hay linea vertical.
             for (int r = 0; r < 7; r++){ //recorremos la linea
                 if (allSquares[r][column].visited)
                     allSQ[r][column].erasable = true; // marcamos los visitados para ser borrados.
@@ -41,10 +41,38 @@ public class LineChecker {
             linesPerformed++;
         }
 
+        if (checkNegativeDiagonal(row, column, colorCheck) >= 4){ // si hay linea diagonal_negativa.
+            for (int r = row; r < 7; r++) { //recorremos la linea desde la posicion hacia abajo_izquierda
+                for (int c = column; c >= 0; c--)
+                    if (allSquares[r][c].visited)
+                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+            }
+            for (int r = row; r >= 0; r--){ //recorremos la linea desde la posicion hacia arriba_derecha
+                for (int c = column; c < 7 ; c++)
+                    if (allSquares[r][c].visited)
+                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+            }
+            linesPerformed++;
+        }
+
+        if (checkPositiveDiagonal(row, column, colorCheck) >= 4){ // si hay linea diagonal_positiva.
+            for (int r = row; r < 7; r++) { //recorremos la linea desde la posicion hacia abajo_derecha
+                for (int c = column; c < 7; c++)
+                    if (allSquares[r][c].visited)
+                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+            }
+            for (int r = row; r >= 0; r--){ //recorremos la linea desde la posicion hacia arriba_izquierda
+                for (int c = column; c >= 0; c--)
+                    if (allSquares[r][c].visited)
+                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+            }
+            linesPerformed++;
+        }
+
 
         //Revisamos si hay combo
         if(linesPerformed > 1){
-            // COMBO
+            // COCOCOMBOOBREAKER!!!
             return true;
         }else if ( linesPerformed > 0){
             return true;
@@ -57,9 +85,8 @@ public class LineChecker {
 
     private int checkHorizontalLine(int row, int column, int color) {
 
-        allSquares[row][column].visited = true; // me marco como visitado.
-
         if (allSquares[row][column].getColor() == color) {
+            allSquares[row][column].visited = true; // me marco como visitado sólo si soy del color.
             if (column + 1 <= 6 && column-1 >= 0) {
                 if (allSquares[row][column + 1].visited && !allSquares[row][column - 1].visited) { // si el de la derecha ya ha sido visitado y el de la izquierda no.
                     return (1 + checkHorizontalLine(row, column - 1, color)); // compruebo al de la izquierda.
@@ -91,9 +118,8 @@ public class LineChecker {
 
     private int checkVerticalLine(int row, int column, int color) {
 
-        allSquares[row][column].visited = true; // me marco como visitado.
-
         if (allSquares[row][column].getColor() == color) {
+            allSquares[row][column].visited = true; // me marco como visitado sólo si soy del color.
             if (row + 1 <= 6 && row - 1 >= 0) {
                 if (allSquares[row + 1 ][column].visited && !allSquares[row - 1 ][column].visited) { // si el de debajo ya ha sido visitado y el de arriba no.
                     return (1 + checkVerticalLine(row - 1, column, color)); // compruebo al de arriba.
@@ -125,32 +151,25 @@ public class LineChecker {
 
     private int checkNegativeDiagonal(int row, int column, int color) {
 
-        return 1;
-
-    }
-
-    private int checkPositiveDiagonal(int row, int column, int color) {
-
-        /*allSquares[row][column].visited = true; // me marco como visitado.
-
         if (allSquares[row][column].getColor() == color) {
+            allSquares[row][column].visited = true; // me marco como visitado sólo si soy del color.
             if (row + 1 <= 6 && row - 1 >= 0 && column + 1 <= 6 && column-1 >= 0) {
-                if (allSquares[row + 1 ][column].visited && !allSquares[row - 1 ][column].visited) { // si el de debajo ya ha sido visitado y el de arriba no.
-                    return (1 + checkVerticalLine(row - 1, column, color)); // compruebo al de arriba.
-                } else if (allSquares[row -1 ][column].visited && !allSquares[row + 1 ][column].visited) { // si el de arriba ya ha sido visitado y el de abajo no:
-                    return (1 + checkVerticalLine(row + 1 , column, color)); // compruebo al de abajo.
+                if (allSquares[row + 1 ][column - 1 ].visited && !allSquares[row - 1 ][column + 1].visited) { // si el de debajo_izquierda ya ha sido visitado y el de arriba_derecha no.
+                    return (1 + checkNegativeDiagonal(row - 1, column + 1, color)); // compruebo al de arriba_derecha.
+                } else if (allSquares[row -1 ][column+1].visited && !allSquares[row + 1 ][column-1].visited) { // si el de arriba_derecha ya ha sido visitado y el de abajo_izquierda no:
+                    return (1 + checkNegativeDiagonal(row + 1, column - 1, color)); // compruebo al de abajo_izquierda.
                 } else {
-                    return (1 + checkVerticalLine(row + 1, column, color) + checkVerticalLine(row - 1, column , color)); // si las dos anteriores dan falso, los dos vecinos están sin visitar.
+                    return (1 + checkNegativeDiagonal(row + 1, column - 1, color) + checkNegativeDiagonal(row - 1, column + 1, color)); // si las dos anteriores dan falso, los dos vecinos están sin visitar.
                 }
-            }else if(row  == 6){ // CASO BASE de la recursividad, el siguiente cuadrado inferior no existe. No hay que hacer más llamadas hacia abajo.
-                if (!allSquares[row-1][column].visited){
-                    return (1 + checkVerticalLine(row -1, column , color));
-                }else{
+            }else if(row  == 6 && column != 6|| column == 0 && row != 0){ // CASO BASE de la recursividad, el siguiente cuadrado inferior_izquierda no existe. No hay que hacer más llamadas hacia abajo_izquierda.
+                if (!allSquares[row-1][column+1].visited){
+                    return (1 + checkNegativeDiagonal(row - 1, column + 1, color));
+                } else {
                     return 1;
                 }
-            }else if (row == 0){ // CASO BASE de la recursividad, el siguiente cuadrado superior no existe. No hay que hacer más llamadas hacia arriba.
-                if (!allSquares[row+1][column].visited){
-                    return (1 + checkVerticalLine(row+1, column, color ));
+            }else if (row == 0 && column != 0|| column == 6 && row != 6){ // CASO BASE de la recursividad, el siguiente cuadrado superior_derecha no existe. No hay que hacer más llamadas hacia arriba_derecha.
+                if (!allSquares[row+1][column-1].visited){
+                    return (1 + checkNegativeDiagonal(row + 1, column - 1, color ));
                 }else{
                     return 1;
                 }
@@ -160,8 +179,40 @@ public class LineChecker {
         } else {
             return 0; // CASO BASE de la recursividad, el cuadrado es de otro color.
         }
-        */
-        return 0;
+    }
+
+    private int checkPositiveDiagonal(int row, int column, int color) {
+
+        if (allSquares[row][column].getColor() == color) {
+            allSquares[row][column].visited = true; // me marco como visitado sólo si soy del color.
+            if (row + 1 <= 6 && row - 1 >= 0 && column + 1 <= 6 && column-1 >= 0) {
+                if (allSquares[row + 1 ][column + 1 ].visited && !allSquares[row - 1 ][column - 1].visited) { // si el de debajo_derecha ya ha sido visitado y el de arriba_izquierda no.
+                    return (1 + checkPositiveDiagonal(row - 1, column -1, color)); // compruebo al de arriba_izquierda.
+                } else if (allSquares[row -1 ][column-1].visited && !allSquares[row + 1 ][column+1].visited) { // si el de arriba_izquierda ya ha sido visitado y el de abajo_derecha no:
+                    return (1 + checkPositiveDiagonal(row + 1, column + 1, color)); // compruebo al de abajo_derecha.
+                } else {
+                    return (1 + checkPositiveDiagonal(row + 1, column+1, color) + checkPositiveDiagonal(row - 1, column-1, color)); // si las dos anteriores dan falso, los dos vecinos están sin visitar.
+                }
+            }else if(row  == 6 && column != 0 || column == 6 && row != 0){ // CASO BASE de la recursividad, el siguiente cuadrado inferior_derecha no existe. No hay que hacer más llamadas hacia abajo_derecha.
+                if (!allSquares[row-1][column-1].visited){
+                    return (1 + checkPositiveDiagonal(row - 1, column - 1, color));
+                }else{
+                    return 1;
+                }
+            }else if (row == 0 && column != 6 || column == 0 && row != 6){ // CASO BASE de la recursividad, el siguiente cuadrado superior_izquierda no existe. No hay que hacer más llamadas hacia arriba_izquierda.
+                if (!allSquares[row+1][column+1].visited){
+                    return (1 + checkPositiveDiagonal(row+1, column+1, color ));
+                }else{
+                    return 1;
+                }
+            }else{
+                return 1;
+            }
+        } else {
+            return 0; // CASO BASE de la recursividad, el cuadrado es de otro color.
+        }
+
+
     }
 
 
