@@ -29,6 +29,7 @@ public class Game7x7Model {
     private static final int GREEN = Color.rgb(183,233,45);
     private static final int RED = Color.rgb(255,0,0);
     public static final int GRAY = Color.rgb(242, 240, 240);
+    public static final int LINES_NEXT_LEVEL = 40;
 
 
 
@@ -107,6 +108,11 @@ public class Game7x7Model {
             difPosBigTransparentSquare-=1;
             difSideBigTransparentSquare-=2;
 
+        }
+        if (lines == LINES_NEXT_LEVEL){
+            lines = 0;
+            level++;
+            nextColor();
         }
 
     }

@@ -8,22 +8,24 @@ import an.an7x7.framework.Graphics;
  */
 public class DrawNextSquares {
 
-    float width, squareSide;
+    float width, squareSide, height;
     int padding;
     Game7x7Model model;
     Graphics graphics;
+    float yOrigin;
 
-    public DrawNextSquares (float width, float squareSide, int padding, Game7x7Model model, Graphics graphics) {
+    public DrawNextSquares (float width, float height, float squareSide, int padding, Game7x7Model model, Graphics graphics) {
         this.width = width;
         this.squareSide = squareSide;
         this.padding = padding;
         this.model = model;
         this.graphics = graphics;
+        yOrigin = height * 15 /100;
     }
 
     public void draw (int i, int j) {
        float x = width - (j*(squareSide/1.35f) + (j-1)*padding*2 + 40);
-        float y = 300 + i * (squareSide/1.35f + padding*2);
+        float y = yOrigin + i * (squareSide/1.35f + padding*2);
         switch (model.level) {
             case 3:
                 if (i == 0 && j==3)

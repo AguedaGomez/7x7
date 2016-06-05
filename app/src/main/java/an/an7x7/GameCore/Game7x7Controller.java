@@ -34,9 +34,10 @@ public class Game7x7Controller implements IGameController  {
     private boolean GameOverdialogNotCreated = true;
     private DrawNextSquares nextSquares;
     private float xtext;
-    private float ytext = 290;
+    private float ytext;
     private float progress;
-    int lastColorDeleted = model.GRAY;
+    private int lastColorDeleted = model.GRAY;
+    private float yLine;
 
     public Game7x7Controller(float screenWidth, float screenHeight, Context context, FragmentManager fm){
 
@@ -48,8 +49,10 @@ public class Game7x7Controller implements IGameController  {
         graphics = new Graphics((int) width, (int) height);
         model = new Game7x7Model();
         xtext = width - (3*(squareSide/1.35f) + (2-1)*SQUARE_PADDING*2 + 40);
-        nextSquares = new DrawNextSquares(width,squareSide,SQUARE_PADDING,model,graphics);
-        progress = width/40;
+        ytext = height * 14 /100;
+        nextSquares = new DrawNextSquares(width,height,squareSide,SQUARE_PADDING,model,graphics);
+        progress = width/model.LINES_NEXT_LEVEL;
+        yLine = height * 7 / 100;
     }
 
     private int xScreen2column(float xScreen){
@@ -93,31 +96,32 @@ public class Game7x7Controller implements IGameController  {
 
         graphics.clear(Color.WHITE);
         float x, y;
-        int lines2nextLevel = 40 - model.lines;
+        int lines2nextLevel = model.LINES_NEXT_LEVEL - model.lines;
 
 
-        graphics.drawRect(0,0, progress*model.lines, 120, lastColorDeleted);
-        graphics.drawLine(0,120,width,120, Color.LTGRAY);
-        graphics.drawText(lines2nextLevel + " LINES TO NEXT LEVEL", 10, 170, 40, Color.LTGRAY);
+        graphics.drawLine(0,yLine,width, yLine, Color.LTGRAY); // línea de división
+        graphics.drawRect(0, 0, progress * model.lines, yLine, lastColorDeleted); // progreso
+        graphics.drawText(lines2nextLevel + " LINES TO NEXT LEVEL", 10, yLine + 50, 40, Color.LTGRAY); // texto lineas que faltan para el siguiente nivel
 
         switch (model.level) {
             case 3:
-                graphics.drawText("LEVEL 1", 80, 90, 80, Color.BLACK);
+                graphics.drawText("LEVEL 1", 80, yLine - 30, 60, Color.BLACK);
                 break;
             case 4:
-                graphics.drawText("LEVEL 2", 80, 90, 80, Color.BLACK);
+                graphics.drawText("LEVEL 2", 80, yLine - 30, 60, Color.BLACK);
                 break;
             case 5:
-                graphics.drawText("LEVEL 3", 80, 90, 80, Color.BLACK);
+                graphics.drawText("LEVEL 3", 80, yLine - 30, 60, Color.BLACK);
                 break;
             case 6:
-                graphics.drawText("LEVEL 4", 80, 90, 80, Color.BLACK);
+                graphics.drawText("LEVEL 4", 80, yLine - 30, 60, Color.BLACK);
                 break;
         }
 
 
         graphics.drawText("UP NEXT", xtext, ytext, 40, Color.BLACK);
         graphics.drawText("SCORE", 10, ytext, 20, Color.BLACK);
+        graphics.drawText(model.score + "", 10, ytext+70, 80, Color.BLACK);
         graphics.drawText("COMBO", 10, ytext+squareSide/1.35f, 20, Color.BLACK);
 
         for (int i = 0; i < 2; i++ ) {
