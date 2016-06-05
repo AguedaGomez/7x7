@@ -28,10 +28,15 @@ public class Game7x7Controller implements IGameController  {
     private final FragmentManager fm;
     private final float squareSide;
 
+
     private Graphics graphics;
     private Game7x7Model model;
     private boolean GameOverdialogNotCreated = true;
     private DrawNextSquares nextSquares;
+    private float xtext;
+    private float ytext = 290;
+    private float progress;
+    int lastColorDeleted = model.GRAY;
 
     public Game7x7Controller(float screenWidth, float screenHeight, Context context, FragmentManager fm){
 
@@ -42,7 +47,9 @@ public class Game7x7Controller implements IGameController  {
         squareSide = screenWidth/7 - SQUARE_PADDING;
         graphics = new Graphics((int) width, (int) height);
         model = new Game7x7Model();
+        xtext = width - (3*(squareSide/1.35f) + (2-1)*SQUARE_PADDING*2 + 40);
         nextSquares = new DrawNextSquares(width,squareSide,SQUARE_PADDING,model,graphics);
+        progress = width/40;
     }
 
     private int xScreen2column(float xScreen){
@@ -85,7 +92,33 @@ public class Game7x7Controller implements IGameController  {
     public Bitmap onDrawingRequested() {
 
         graphics.clear(Color.WHITE);
-        float x, y, xprev, yprev;
+        float x, y;
+        int lines2nextLevel = 40 - model.lines;
+
+
+        graphics.drawRect(0,0, progress*model.lines, 120, lastColorDeleted);
+        graphics.drawLine(0,120,width,120, Color.LTGRAY);
+        graphics.drawText(lines2nextLevel + " LINES TO NEXT LEVEL", 10, 170, 40, Color.LTGRAY);
+
+        switch (model.level) {
+            case 3:
+                graphics.drawText("LEVEL 1", 80, 90, 80, Color.BLACK);
+                break;
+            case 4:
+                graphics.drawText("LEVEL 2", 80, 90, 80, Color.BLACK);
+                break;
+            case 5:
+                graphics.drawText("LEVEL 3", 80, 90, 80, Color.BLACK);
+                break;
+            case 6:
+                graphics.drawText("LEVEL 4", 80, 90, 80, Color.BLACK);
+                break;
+        }
+
+
+        graphics.drawText("UP NEXT", xtext, ytext, 40, Color.BLACK);
+        graphics.drawText("SCORE", 10, ytext, 20, Color.BLACK);
+        graphics.drawText("COMBO", 10, ytext+squareSide/1.35f, 20, Color.BLACK);
 
         for (int i = 0; i < 2; i++ ) {
             for (int j = 3; j > 0; j--) {
@@ -123,10 +156,14 @@ public class Game7x7Controller implements IGameController  {
                     float coordy = y-SQUARE_PADDING * model.difPosBigTransparentSquare;
                     float side = squareSide+ SQUARE_PADDING * model.difSideBigTransparentSquare;
                     graphics.drawRect(coordx ,coordy ,side , side, model.allSquares[r][c].getColor());
+                    lastColorDeleted = model.allSquares[r][c].getColor();
                 }
                 else {
                     graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
                 }
+
+
+
             }
         }
 

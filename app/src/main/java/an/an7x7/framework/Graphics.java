@@ -2,7 +2,6 @@ package an.an7x7.framework;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
@@ -21,8 +20,8 @@ public class Graphics {
         canvas = new Canvas(frameBuffer);
         paint = new Paint();
         paint.setTextAlign(Paint.Align.LEFT);
-        paint.setTextSize(20);
         paint.setTypeface(Typeface.DEFAULT_BOLD);
+        paint.setAntiAlias(true);
     }
 
     public Bitmap getFrameBuffer() {
@@ -59,8 +58,9 @@ public class Graphics {
     }
 
 
-    public void drawText (String text, float x, float y) {
-        paint.setColor(Color.BLACK);
+    public void drawText (String text, float x, float y, int size, int color) {
+        paint.setTextSize(size);
+        paint.setColor(color);
         canvas.drawText(text, x, y, paint);
     }
 }

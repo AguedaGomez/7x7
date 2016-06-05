@@ -38,7 +38,8 @@ public class Game7x7Model {
     public State state;
     public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
     public int difPosBigTransparentSquare = 10,  difSideBigTransparentSquare = 20;
-    public int level = 6;
+    public int level = 3;
+    public int lines = 0;
 
     private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
@@ -69,6 +70,7 @@ public class Game7x7Model {
                 availablePositions.add(position);
             }
         nextColor();
+        lines = 0;
         state = State.SQUARES_APPEAR;
     }
 
@@ -171,6 +173,7 @@ public class Game7x7Model {
 
                         if (lineChecker.checkForLine(rB, cB, allSquares)) {
                             state = State.SQUARES_DESAPPEAR;
+                            lines++;
 
                         } // revisar si este movimiento puntua.
 
@@ -274,6 +277,7 @@ public class Game7x7Model {
 
         if(lineChecker.checkForLine(row,column,allSquares)){
             state = State.SQUARES_DESAPPEAR;
+            lines++;
         }
 
 
