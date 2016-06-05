@@ -76,7 +76,7 @@ public class DrawNextSquares {
                 else if (i==1 && j == 2)
                     graphics.drawRect(x, y, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[4]);
                 else
-                    graphics.drawRectStroke(x, y, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[5]);
+                    graphics.drawRect(x, y, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[5]);
                 break;
         }
 

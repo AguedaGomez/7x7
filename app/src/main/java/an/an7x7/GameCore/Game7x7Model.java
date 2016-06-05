@@ -38,7 +38,7 @@ public class Game7x7Model {
     public State state;
     public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
     public int difPosBigTransparentSquare = 10,  difSideBigTransparentSquare = 20;
-    public int level = 3;
+    public int level = 6;
 
     private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
