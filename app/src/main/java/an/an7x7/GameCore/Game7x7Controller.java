@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ import an.an7x7.framework.TouchHandler;
 /**
  * Created by NachoLR on 10/05/2016.
  */
-public class Game7x7Controller implements IGameController {
+public class Game7x7Controller implements IGameController  {
 
     private static final float SQUARE_PADDING = 2;
     private static final int BOARD_DIMENSION = 7;
@@ -28,7 +29,7 @@ public class Game7x7Controller implements IGameController {
 
     private Graphics graphics;
     private Game7x7Model model;
-    private boolean dialogNotCreated = true;
+    private boolean GameOverdialogNotCreated = true;
 
     public Game7x7Controller(float screenWidth, float screenHeight, Context context, FragmentManager fm){
 
@@ -66,8 +67,9 @@ public class Game7x7Controller implements IGameController {
             }
         model.update(deltaTime);
 
-        if (model.state == Game7x7Model.State.END_GAME && dialogNotCreated){
-            dialogNotCreated = false;
+        if (model.state == Game7x7Model.State.END_GAME && GameOverdialogNotCreated){
+            Log.d("TEST","GAME OVER");
+            GameOverdialogNotCreated = false;
             EndGameDialogFragment dialogFragment = new EndGameDialogFragment ();
             dialogFragment.show(fm, "Sample Fragment");
         }
@@ -127,4 +129,10 @@ public class Game7x7Controller implements IGameController {
 
         return graphics.getFrameBuffer();
     }
+
+    public void restartGame(){
+        GameOverdialogNotCreated = true;
+        model.restartGame();
+    }
+
 }

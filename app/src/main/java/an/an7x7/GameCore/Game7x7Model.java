@@ -15,7 +15,6 @@ import an.an7x7.Model.Square;
  */
 public class Game7x7Model {
 
-
     public enum State {
         ON_GAME,
         SQUARES_APPEAR,
@@ -273,4 +272,9 @@ public class Game7x7Model {
     }
 
 
+    public void restartGame() {
+        state = State.ON_GAME;
+        availablePositions.clear();
+        startLevel();
+    }
 }
