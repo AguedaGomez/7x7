@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.util.List;
 
+import an.an7x7.Model.DrawNextSquares;
 import an.an7x7.Utilities.EndGameDialogFragment;
 import an.an7x7.framework.Graphics;
 import an.an7x7.framework.IGameController;
@@ -18,7 +19,7 @@ import an.an7x7.framework.TouchHandler;
  */
 public class Game7x7Controller implements IGameController  {
 
-    private static final float SQUARE_PADDING = 2;
+    private static final int SQUARE_PADDING = 2;
     private static final int BOARD_DIMENSION = 7;
 
     private final float width;
@@ -30,6 +31,7 @@ public class Game7x7Controller implements IGameController  {
     private Graphics graphics;
     private Game7x7Model model;
     private boolean GameOverdialogNotCreated = true;
+    private DrawNextSquares nextSquares;
 
     public Game7x7Controller(float screenWidth, float screenHeight, Context context, FragmentManager fm){
 
@@ -40,6 +42,7 @@ public class Game7x7Controller implements IGameController  {
         squareSide = screenWidth/7 - SQUARE_PADDING;
         graphics = new Graphics((int) width, (int) height);
         model = new Game7x7Model();
+        nextSquares = new DrawNextSquares(width,squareSide,SQUARE_PADDING,model,graphics);
     }
 
     private int xScreen2column(float xScreen){
@@ -86,17 +89,9 @@ public class Game7x7Controller implements IGameController  {
 
         for (int i = 0; i < 2; i++ ) {
             for (int j = 3; j > 0; j--) {
-                xprev = width - (j*(squareSide/1.35f) + (j-1)*SQUARE_PADDING*2 + 40);
-                yprev = 150 + i * (squareSide/1.35f + SQUARE_PADDING*2);
-                if (i == 0 && j==3)
-                    graphics.drawRect(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[0]);
-                else if (i==0 && j==2)
-                    graphics.drawRect(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[1]);
-                else if (i==0 && j==1)
-                    graphics.drawRect(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[2]);
-                else
-                    graphics.drawRectStroke(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.GRAY);
+                nextSquares.draw(i,j);
             }
+
         }
 
         for(int r = 0 ; r < BOARD_DIMENSION; r++) {
