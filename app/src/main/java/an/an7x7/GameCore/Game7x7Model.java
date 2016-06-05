@@ -67,6 +67,7 @@ public class Game7x7Model {
                 String position = "" + row  + column;
                 availablePositions.add(position);
             }
+        nextColor();
         state = State.SQUARES_APPEAR;
     }
 
@@ -100,8 +101,6 @@ public class Game7x7Model {
     }
 
     private void updateSquaresAppear(float deltaTime) {
-        if (newSquaresCounter == 0)
-            nextColor();
         if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) { // Cuando termine la transición de mayor tamaño al tamaño definitivo.
             if (newSquaresCounter == level) { // Si ya ha creado los cuadrados segun el nivel
                 state = State.ON_GAME;
@@ -112,9 +111,10 @@ public class Game7x7Model {
                 if(availablePositions.isEmpty()){ // si no hay posiciones disponibles se acaba el juego
                     state = State.END_GAME;
                     Log.d("TEST", "FIN JUEGO");
-                }else{
-                createSquareRandom(newSquaresCounter);
-                newSquaresCounter++;
+                }
+                else{
+                    createSquareRandom(newSquaresCounter);
+                    newSquaresCounter++;
                 }
             }
             differenceSideBigSquare = 20;
@@ -170,14 +170,11 @@ public class Game7x7Model {
 
                         if (lineChecker.checkForLine(rB, cB, allSquares)) {
                             state = State.SQUARES_DESAPPEAR;
-                            //eraseLine();
 
                         } // revisar si este movimiento puntua.
 
                         else {
                             state = State.SQUARES_APPEAR;
-                            nextColor();
-                            //createSquareRandom();
                         }
                     }
                 }

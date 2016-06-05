@@ -88,7 +88,14 @@ public class Game7x7Controller implements IGameController  {
             for (int j = 3; j > 0; j--) {
                 xprev = width - (j*(squareSide/1.35f) + (j-1)*SQUARE_PADDING*2 + 40);
                 yprev = 150 + i * (squareSide/1.35f + SQUARE_PADDING*2);
-                graphics.drawRectStroke(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.GRAY);
+                if (i == 0 && j==3)
+                    graphics.drawRect(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[0]);
+                else if (i==0 && j==2)
+                    graphics.drawRect(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[1]);
+                else if (i==0 && j==1)
+                    graphics.drawRect(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.squaresPreview[2]);
+                else
+                    graphics.drawRectStroke(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.GRAY);
             }
         }
         
