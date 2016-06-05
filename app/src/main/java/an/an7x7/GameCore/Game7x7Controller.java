@@ -167,6 +167,7 @@ public class Game7x7Controller implements IGameController  {
 
                 if (model.state == Game7x7Model.State.SQUARE_SELECTED && model.selectRow == r && model.selectColumn == c) {
                     graphics.drawRect(x - SQUARE_PADDING * 2, y - SQUARE_PADDING * 2, squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, model.allSquares[r][c].getColor());
+                    graphics.drawRect(x - SQUARE_PADDING * 2, y- SQUARE_PADDING * 2, squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, Color.argb(30, 0, 0, 0));
                 }
                 else if(model.state == Game7x7Model.State.SQUARE_SELECTED){
                     if (!model.allSquares[r][c].selectable && model.allSquares[r][c].getColor() == model.GRAY ){
@@ -176,6 +177,7 @@ public class Game7x7Controller implements IGameController  {
                     }
                     else{
                         graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
+
                     }
                 }
                 else if (model.state == Game7x7Model.State.SQUARES_APPEAR && model.selectRow == r && model.selectColumn == c &&  model.allSquares[r][c].getColor()!= model.GRAY){
@@ -183,6 +185,7 @@ public class Game7x7Controller implements IGameController  {
                     float coordy = y - SQUARE_PADDING * model.differencePositionBigSquare;
                     float side =  squareSide + SQUARE_PADDING * model.differenceSideBigSquare;
                     graphics.drawRect(coordx,coordy, side, side, model.allSquares[r][c].getColor());
+
                 }
                 else if (model.state == Game7x7Model.State.SQUARES_DESAPPEAR && model.allSquares[r][c].erasable) {
                     float coordx = x-SQUARE_PADDING * model.difPosBigTransparentSquare;

@@ -53,7 +53,7 @@ public class Game7x7Model {
     private int newSquaresCounter = 0;
     private boolean aleatorianLine = false;
 
-    
+
 
     public Game7x7Model(){
 
@@ -187,11 +187,13 @@ public class Game7x7Model {
             else {
                 if (state == State.SQUARE_SELECTED) {
                     if (allSquares[rB][cB].selectable) {
-
                         int currentColor = allSquares[selectRow][selectColumn].getColor();
+
+
                         allSquares[selectRow][selectColumn].setColor(GRAY);
 
                         availablePositions.add("" + selectRow + selectColumn);
+
                         allSquares[rB][cB].setColor(currentColor);
                         availablePositions.remove("" + rB + cB);
 
