@@ -23,6 +23,8 @@ public class Game7x7Model {
         END_GAME;
     }
 
+
+
     private static final int PURPLE = Color.rgb(153,51,255);
     private static final int BLUE = Color.rgb(120,230,247);
     private static final int YELLOW = Color.rgb(255,204,0);
@@ -49,10 +51,9 @@ public class Game7x7Model {
     private List<String> availablePositions;
     private LineChecker lineChecker;
     private int newSquaresCounter = 0;
+    private boolean aleatorianLine = false;
 
-
-
-
+    
 
     public Game7x7Model(){
 
@@ -151,6 +152,11 @@ public class Game7x7Model {
 
 
     private void updateGame(float deltaTime) {
+        if (aleatorianLine) {
+            state = State.SQUARES_APPEAR;
+            aleatorianLine = false;
+        }
+
         if (availablePositions.isEmpty()) {
             state = State.END_GAME;
             Log.d("TEST", "FIN JUEGO");
@@ -316,6 +322,7 @@ public class Game7x7Model {
         if(lineChecker.checkForLine(row,column,allSquares)){
             Log.d("TEST","LINEA ALEATORIA DETECTADA");
             state = State.SQUARES_DESAPPEAR;
+            aleatorianLine = true;
             lines++;
         }
 
@@ -323,7 +330,7 @@ public class Game7x7Model {
     }
 
     private void nextColor() {
-        for (int i = 0; i < level; i++) { // ************ CAMBIAR EN FUNCION DEL NIVEL ***********
+        for (int i = 0; i < level; i++) {
             squaresPreview[i]=colors[randomColor.nextInt(5 - 0)];
         }
 
