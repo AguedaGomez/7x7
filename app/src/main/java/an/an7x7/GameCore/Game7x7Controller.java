@@ -4,6 +4,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
 
 import java.util.List;
@@ -94,8 +95,11 @@ public class Game7x7Controller implements IGameController  {
         if (model.state == Game7x7Model.State.END_GAME && GameOverdialogNotCreated){
             Log.d("TEST","GAME OVER");
             GameOverdialogNotCreated = false;
+            Bundle args = new Bundle();
+            args.putString("score",""+model.score);
             EndGameDialogFragment dialogFragment = new EndGameDialogFragment ();
-            dialogFragment.show(fm, "Sample Fragment");
+            dialogFragment.setArguments(args);
+            dialogFragment.show(fm,"Game Over");
         }
 
     }

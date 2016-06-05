@@ -39,10 +39,12 @@ public class EndGameDialogFragment extends DialogFragment {
     @Override
     public Dialog onCreateDialog(Bundle savedInstance) {
         Log.d("TEST","Se muestra el EndGameDialog");
+        Bundle mArgs = getArguments();
+        String score = mArgs.getString("score");
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Game Over")
-                .setMessage("Score/n turn")
-                .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
+                .setMessage(" Score: "+ score)
+                .setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
