@@ -10,7 +10,7 @@ public class LineChecker {
 
 
     private Square[][] allSquares;
-    public boolean combo = false;
+    public boolean multipleLine = false;
 
 
     public boolean checkForLine(int row, int column, Square[][] allSQ) {
@@ -92,13 +92,13 @@ public class LineChecker {
 
         //Revisamos si hay combo
         if(linesPerformed > 1){
-            combo = true;
+            multipleLine = true;
             return true;
         }else if ( linesPerformed > 0){
-            combo = false;
+            multipleLine = false;
             return true;
         }else{
-            combo = false;
+            multipleLine = false;
             return false;
         }
 

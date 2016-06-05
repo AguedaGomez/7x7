@@ -41,12 +41,14 @@ public class Game7x7Model {
     public int level = 3;
     public int score = 0;
     public int lines = 0;
+    public int comboCounter = 0;
 
     private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
     private int newSquaresCounter = 0;
+
 
 
 
@@ -82,6 +84,7 @@ public class Game7x7Model {
                updateGame(deltaTime);
                break;
            case SQUARES_APPEAR:
+               comboCounter = 0;
                updateSquaresAppear(deltaTime);
                break;
            case SQUARES_DESAPPEAR:
@@ -211,14 +214,16 @@ public class Game7x7Model {
     }
 
     private void scorePoints(int sqErased) {
+        comboCounter++;
         Log.d("TEST","score = " + score );
-        if(!lineChecker.combo){ // si no es combo
-            Log.d("TEST","NOT COMBO, score performed = "+ sqErased * (6 + level));
-            score += sqErased * (6 + level);
+        Log.d("TEST","comboCounter = " + comboCounter );
+        if(!lineChecker.multipleLine){ // si no es lineaMultiple
+            Log.d("TEST","Linea simple, score performed = "+ (sqErased * (3 + level)) * (comboCounter+1));
+            score += (sqErased * (3 + level)) * (comboCounter+1); // hay que sumar 1 para que con counter = 0 multiplique por 1, si counter es 1, multiplique por 2....
             Log.d("TEST","score result = " + score );
-        }else{ // si es combo, puntuan más
-            Log.d("TEST","COCOCOMBOBREAKER!, score performed = "+ sqErased * (9 + level));
-            score += sqErased * (9 + level);
+        }else{ // si es multiple, puntuan más
+            Log.d("TEST","LineaMultiple!, score performed = "+ (sqErased * (6 + level)) * (comboCounter+1));
+            score += (sqErased * (6 + level)) * (comboCounter+1);
             Log.d("TEST","score result = " + score );
         }
 
