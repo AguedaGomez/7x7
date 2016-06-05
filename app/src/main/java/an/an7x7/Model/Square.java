@@ -15,7 +15,7 @@ public class Square {
     public int myColumn;
 
     public Square(int r, int c) {
-        color = Color.LTGRAY;
+        color = Color.rgb(242, 240, 240);
         myRow = r;
         myColumn = c;
     }
