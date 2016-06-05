@@ -38,13 +38,15 @@ public class Game7x7Model {
     public State state;
     public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
     public int difPosBigTransparentSquare = 10,  difSideBigTransparentSquare = 20;
-    public int level = 6;
+    public int level = 3;
+    public int score = 0;
 
     private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
     private int newSquaresCounter = 0;
+
 
 
 
@@ -91,9 +93,10 @@ public class Game7x7Model {
             eraseLine();
             difPosBigTransparentSquare=10;
             difSideBigTransparentSquare=20;
-            if(newSquaresCounter == level){ // si ya ha creado los colores de la ronda, sigue jugando
-            state = State.ON_GAME;
-            }else{ // si no, es que la linea se ha eliminado al generar un cuadrado nuevo y tienen que salir aún algunos más.
+            if (newSquaresCounter == level) { // si ya ha generado los cuadrados del nivel
+                state = State.ON_GAME;
+                newSquaresCounter = 0;
+            }else{ // si no, es que ha eliminado una linea aleatoria y tienen que seguir saliendo nuevos
                 state = State.SQUARES_APPEAR;
             }
         }
@@ -190,14 +193,32 @@ public class Game7x7Model {
     }
 
     private void eraseLine() {
+        int squaresErased = 0;
         for (int row = 0; row < 7; row++)
             for (int column = 0; column < 7; column++){
                 if(allSquares[row][column].erasable){
                     allSquares[row][column].setColor(GRAY);
                     availablePositions.add("" + row + column);
+                    squaresErased++;
                 }
 
             }
+        scorePoints(squaresErased);
+    }
+
+    private void scorePoints(int sqErased) {
+        Log.d("TEST","score = " + score );
+        if(!lineChecker.combo){ // si no es combo
+            Log.d("TEST","NOT COMBO, score performed = "+ sqErased * (6 + level));
+            score += sqErased * (6 + level);
+            Log.d("TEST","score result = " + score );
+        }else{ // si es combo, puntuan más
+            Log.d("TEST","COCOCOMBOBREAKER!, score performed = "+ sqErased * (9 + level));
+            score += sqErased * (9 + level);
+            Log.d("TEST","score result = " + score );
+        }
+
+
     }
 
     public void findTargetableLocations(){
@@ -277,6 +298,7 @@ public class Game7x7Model {
         availablePositions.remove(pos);
 
         if(lineChecker.checkForLine(row,column,allSquares)){
+            Log.d("TEST","LINEA ALEATORIA DETECTADA");
             state = State.SQUARES_DESAPPEAR;
         }
 

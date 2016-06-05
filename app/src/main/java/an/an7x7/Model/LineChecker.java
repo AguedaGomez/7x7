@@ -10,6 +10,7 @@ public class LineChecker {
 
 
     private Square[][] allSquares;
+    public boolean combo = false;
 
 
     public boolean checkForLine(int row, int column, Square[][] allSQ) {
@@ -87,14 +88,17 @@ public class LineChecker {
             linesPerformed++;
         }
 
+        Log.d("TEST","LINEAS HECHAS = " + linesPerformed);
 
         //Revisamos si hay combo
         if(linesPerformed > 1){
-            // COCOCOMBOOBREAKER!!!
+            combo = true;
             return true;
         }else if ( linesPerformed > 0){
+            combo = false;
             return true;
         }else{
+            combo = false;
             return false;
         }
 
