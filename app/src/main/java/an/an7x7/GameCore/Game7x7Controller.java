@@ -91,6 +91,7 @@ public class Game7x7Controller implements IGameController  {
                 graphics.drawRectStroke(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.GRAY);
             }
         }
+        
         for(int r = 0 ; r < BOARD_DIMENSION; r++) {
             for (int c = 0; c < BOARD_DIMENSION; c++) {
                 x = column2xScreen(c);

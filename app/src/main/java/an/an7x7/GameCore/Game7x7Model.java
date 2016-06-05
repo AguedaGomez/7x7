@@ -30,6 +30,8 @@ public class Game7x7Model {
     private static final int RED = Color.rgb(255,0,0);
     public static final int GRAY = Color.rgb(242, 240, 240);
 
+
+
     public Square[][] allSquares;
     public int [] squaresPreview;
     public int selectRow, selectColumn;
@@ -41,7 +43,8 @@ public class Game7x7Model {
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
-    private int newSquaresCounter = 1;
+    private int newSquaresCounter = 0;
+    private  int level = 3;
 
 
     public Game7x7Model(){
@@ -97,19 +100,20 @@ public class Game7x7Model {
     }
 
     private void updateSquaresAppear(float deltaTime) {
-        if (newSquaresCounter == 1)
+        if (newSquaresCounter == 0)
             nextColor();
-        if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) {
-            if (newSquaresCounter == 3) { // ESTO VA EN FUNCION DEL NIVEL ------------PROVISONAL--------------------
+        if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) { // Cuando termine la transición de mayor tamaño al tamaño definitivo.
+            if (newSquaresCounter == level) { // Si ya ha creado los cuadrados segun el nivel
                 state = State.ON_GAME;
-                newSquaresCounter = 1;
+                nextColor(); // Cargamos los colores de la ronda siguiente
+                newSquaresCounter = 0;
             }
-            else {
-                if(availablePositions.isEmpty()){
+            else {              // si aun no ha creado los cuadrados segun el nivel
+                if(availablePositions.isEmpty()){ // si no hay posiciones disponibles se acaba el juego
                     state = State.END_GAME;
                     Log.d("TEST", "FIN JUEGO");
                 }else{
-                createSquareRandom(newSquaresCounter-1);
+                createSquareRandom(newSquaresCounter);
                 newSquaresCounter++;
                 }
             }
@@ -278,7 +282,7 @@ public class Game7x7Model {
     }
 
     private void nextColor() {
-        for (int i = 0; i < 3; i++) { // ************ CAMBIAR EN FUNCION DEL NIVEL ***********
+        for (int i = 0; i < level; i++) { // ************ CAMBIAR EN FUNCION DEL NIVEL ***********
             squaresPreview[i]=colors[randomColor.nextInt(5 - 0)];
         }
 
