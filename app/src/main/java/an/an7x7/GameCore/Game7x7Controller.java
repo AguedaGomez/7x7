@@ -28,16 +28,27 @@ public class Game7x7Controller implements IGameController  {
     private final FragmentManager fm;
     private final float squareSide;
 
+    private float levelTextXposition;
+    private float levelTextYposition;
+    private int levelTextFontSize;
+    private float leftMarginText;
+    private float xtext;
+    private float ytext;
+    private float yLine;
+    private int mainTextFontSize;
+    private float nextLevelLinesYposition;
+    private float comboTextYposition;
+    private int numericDataFontSize;
+
 
     private Graphics graphics;
     private Game7x7Model model;
     private boolean GameOverdialogNotCreated = true;
     private DrawNextSquares nextSquares;
-    private float xtext;
-    private float ytext;
     private float progress;
     private int lastColorDeleted = model.GRAY;
-    private float yLine;
+
+
 
     public Game7x7Controller(float screenWidth, float screenHeight, Context context, FragmentManager fm){
 
@@ -52,7 +63,7 @@ public class Game7x7Controller implements IGameController  {
         ytext = height * 14 /100;
         nextSquares = new DrawNextSquares(width,height,squareSide,SQUARE_PADDING,model,graphics);
         progress = width/model.LINES_NEXT_LEVEL;
-        yLine = height * 7 / 100;
+        calculateGUIposition();
     }
 
     private int xScreen2column(float xScreen){
@@ -89,6 +100,19 @@ public class Game7x7Controller implements IGameController  {
 
     }
 
+    private void calculateGUIposition(){
+
+        yLine = height * 7 / 100; // 7% de la pantalla desde arriba
+        levelTextXposition = width * 20 /100;
+        levelTextYposition = height * 5 / 100;
+        levelTextFontSize = (int) yLine * 50/100; // es una fuente y tiene que ser int.
+        leftMarginText = width * 3 / 100;
+        mainTextFontSize = levelTextFontSize/2;
+        nextLevelLinesYposition = height*10/100;
+        comboTextYposition = ytext+2*squareSide/1.35f;
+        numericDataFontSize = levelTextFontSize*2;
+
+    }
 
 
     @Override
@@ -101,29 +125,29 @@ public class Game7x7Controller implements IGameController  {
 
         graphics.drawLine(0,yLine,width, yLine, Color.LTGRAY); // línea de división
         graphics.drawRect(0, 0, progress * model.lines, yLine, lastColorDeleted); // progreso
-        graphics.drawText(lines2nextLevel + " LINES TO NEXT LEVEL", 10, yLine + 50, 40, Color.LTGRAY); // texto lineas que faltan para el siguiente nivel
+        graphics.drawText(lines2nextLevel + " LINES TO NEXT LEVEL", leftMarginText,nextLevelLinesYposition ,mainTextFontSize , Color.LTGRAY); // texto lineas que faltan para el siguiente nivel
 
         switch (model.level) {
             case 3:
-                graphics.drawText("LEVEL 1", 80, yLine - 30, 60, Color.BLACK);
+                graphics.drawText("LEVEL 1", levelTextXposition , levelTextYposition, levelTextFontSize, Color.BLACK);
                 break;
             case 4:
-                graphics.drawText("LEVEL 2", 80, yLine - 30, 60, Color.BLACK);
+                graphics.drawText("LEVEL 2", levelTextXposition, levelTextYposition, levelTextFontSize, Color.BLACK);
                 break;
             case 5:
-                graphics.drawText("LEVEL 3", 80, yLine - 30, 60, Color.BLACK);
+                graphics.drawText("LEVEL 3", levelTextXposition, levelTextYposition , levelTextFontSize, Color.BLACK);
                 break;
             case 6:
-                graphics.drawText("LEVEL 4", 80, yLine - 30, 60, Color.BLACK);
+                graphics.drawText("LEVEL 4", levelTextXposition, levelTextYposition , levelTextFontSize, Color.BLACK);
                 break;
         }
 
 
-        graphics.drawText("UP NEXT", xtext, ytext, 40, Color.BLACK);
-        graphics.drawText("SCORE", 10, ytext, 20, Color.BLACK);
-        graphics.drawText(model.score + "", 10, ytext+70, 80, Color.BLACK);
-        graphics.drawText("COMBO", 10, ytext+squareSide/1.35f, 20, Color.BLACK);
-        graphics.drawText(model.comboCounter + "X", 10, ytext+squareSide/1.35f+70, 80, Color.BLACK);
+        graphics.drawText("UP NEXT", xtext, ytext, mainTextFontSize, Color.BLACK);
+        graphics.drawText("SCORE", leftMarginText, ytext, mainTextFontSize, Color.BLACK);
+        graphics.drawText(model.score + "", leftMarginText, ytext+ numericDataFontSize , numericDataFontSize, Color.BLACK);
+        graphics.drawText("COMBO", leftMarginText,comboTextYposition , mainTextFontSize, Color.BLACK);
+        graphics.drawText(model.comboCounter + "X", leftMarginText, comboTextYposition + numericDataFontSize, numericDataFontSize, Color.BLACK);
 
         for (int i = 0; i < 2; i++ ) {
             for (int j = 3; j > 0; j--) {

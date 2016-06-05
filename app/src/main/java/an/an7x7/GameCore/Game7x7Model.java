@@ -121,6 +121,7 @@ public class Game7x7Model {
     }
 
     private void updateSquaresAppear(float deltaTime) {
+        Log.d("TEST","se crea una nueva linea, newSquaresCounter = " + newSquaresCounter);
         if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) { // Cuando termine la transición de mayor tamaño al tamaño definitivo.
             if (newSquaresCounter == level) { // Si ya ha creado los cuadrados segun el nivel
                 state = State.ON_GAME;
