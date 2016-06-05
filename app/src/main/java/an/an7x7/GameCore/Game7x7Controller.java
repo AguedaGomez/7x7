@@ -123,6 +123,7 @@ public class Game7x7Controller implements IGameController  {
         graphics.drawText("SCORE", 10, ytext, 20, Color.BLACK);
         graphics.drawText(model.score + "", 10, ytext+70, 80, Color.BLACK);
         graphics.drawText("COMBO", 10, ytext+squareSide/1.35f, 20, Color.BLACK);
+        graphics.drawText(model.comboCounter + "X", 10, ytext+squareSide/1.35f+70, 80, Color.BLACK);
 
         for (int i = 0; i < 2; i++ ) {
             for (int j = 3; j > 0; j--) {
