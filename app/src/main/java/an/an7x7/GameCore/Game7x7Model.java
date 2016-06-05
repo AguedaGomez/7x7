@@ -24,9 +24,9 @@ public class Game7x7Model {
     }
 
     private static final int PURPLE = Color.rgb(153,51,255);
-    private static final int BLUE = Color.rgb(51,204,255);
+    private static final int BLUE = Color.rgb(120,230,247);
     private static final int YELLOW = Color.rgb(255,204,0);
-    private static final int GREEN = Color.rgb(128,255,0);
+    private static final int GREEN = Color.rgb(183,233,45);
     private static final int RED = Color.rgb(255,0,0);
     public static final int GRAY = Color.rgb(242, 240, 240);
 
@@ -38,13 +38,14 @@ public class Game7x7Model {
     public State state;
     public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
     public int difPosBigTransparentSquare = 10,  difSideBigTransparentSquare = 20;
+    public int level = 3;
 
     private Random randomPosition, randomColor;
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
     private int newSquaresCounter = 0;
-    private  int level = 3;
+
 
 
     public Game7x7Model(){
@@ -272,7 +273,7 @@ public class Game7x7Model {
         availablePositions.remove(pos);
 
         if(lineChecker.checkForLine(row,column,allSquares)){
-            eraseLine();
+            state = State.SQUARES_DESAPPEAR;
         }
 
 
