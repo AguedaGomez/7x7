@@ -23,7 +23,7 @@ public class DrawNextSquares {
 
     public void draw (int i, int j) {
        float x = width - (j*(squareSide/1.35f) + (j-1)*padding*2 + 40);
-        float y = 150 + i * (squareSide/1.35f + padding*2);
+        float y = 300 + i * (squareSide/1.35f + padding*2);
         switch (model.level) {
             case 3:
                 if (i == 0 && j==3)
