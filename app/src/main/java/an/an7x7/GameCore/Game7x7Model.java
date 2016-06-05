@@ -40,7 +40,7 @@ public class Game7x7Model {
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
-    private int newSquaresCounter = 1;
+    private int newSquaresCounter = 0;
 
 
     public Game7x7Model(){
@@ -75,6 +75,7 @@ public class Game7x7Model {
                break;
            case SQUARES_DESAPPEAR:
                updateSquaresDesappear(deltaTime);
+               break;
        }
     }
 

@@ -22,7 +22,7 @@ public class EndGameDialogFragment extends DialogFragment {
                 .setPositiveButton("Try Again", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        ((DialogFragment)getActivity())
+                        //((DialogFragment)getActivity())
                     }
                 })
                 .setNegativeButton("Exit", new DialogInterface.OnClickListener() {
