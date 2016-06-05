@@ -86,9 +86,9 @@ public class Game7x7Controller implements IGameController  {
 
         for (int i = 0; i < 2; i++ ) {
             for (int j = 3; j > 0; j--) {
-                xprev = width - (j*(squareSide/1.5f) + (j-1)*SQUARE_PADDING*2 + 40);
-                yprev = 200 + i * (squareSide/1.5f + SQUARE_PADDING*2);
-                graphics.drawRectStroke(xprev, yprev, squareSide/1.5f, squareSide/1.5f, Color.LTGRAY);
+                xprev = width - (j*(squareSide/1.35f) + (j-1)*SQUARE_PADDING*2 + 40);
+                yprev = 150 + i * (squareSide/1.35f + SQUARE_PADDING*2);
+                graphics.drawRectStroke(xprev, yprev, squareSide / 1.35f, squareSide / 1.35f, model.GRAY);
             }
         }
         for(int r = 0 ; r < BOARD_DIMENSION; r++) {
@@ -100,8 +100,8 @@ public class Game7x7Controller implements IGameController  {
                     graphics.drawRect(x - SQUARE_PADDING * 2, y - SQUARE_PADDING * 2, squareSide + SQUARE_PADDING * 4, squareSide + SQUARE_PADDING * 4, model.allSquares[r][c].getColor());
                 }
                 else if(model.state == Game7x7Model.State.SQUARE_SELECTED){
-                    if (!model.allSquares[r][c].selectable && model.allSquares[r][c].getColor() == Color.LTGRAY ){
-                        graphics.drawRect(x, y, squareSide, squareSide, Color.LTGRAY);
+                    if (!model.allSquares[r][c].selectable && model.allSquares[r][c].getColor() == model.GRAY ){
+                        graphics.drawRect(x, y, squareSide, squareSide, model.GRAY);
                         graphics.drawLine(x, y, x + squareSide, y + squareSide, Color.WHITE);
                         graphics.drawLine(x + squareSide, y, x, y + squareSide, Color.WHITE);
                     }
@@ -109,7 +109,7 @@ public class Game7x7Controller implements IGameController  {
                         graphics.drawRect(x, y, squareSide, squareSide, model.allSquares[r][c].getColor());
                     }
                 }
-                else if (model.state == Game7x7Model.State.SQUARES_APPEAR && model.selectRow == r && model.selectColumn == c){
+                else if (model.state == Game7x7Model.State.SQUARES_APPEAR && model.selectRow == r && model.selectColumn == c &&  model.allSquares[r][c].getColor()!= model.GRAY){
                     float coordx = x - SQUARE_PADDING * model.differencePositionBigSquare;
                     float coordy = y - SQUARE_PADDING * model.differencePositionBigSquare;
                     float side =  squareSide + SQUARE_PADDING * model.differenceSideBigSquare;

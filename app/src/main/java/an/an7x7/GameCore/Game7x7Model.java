@@ -28,8 +28,10 @@ public class Game7x7Model {
     private static final int YELLOW = Color.rgb(255,204,0);
     private static final int GREEN = Color.rgb(128,255,0);
     private static final int RED = Color.rgb(255,0,0);
+    public static final int GRAY = Color.rgb(242, 240, 240);
 
     public Square[][] allSquares;
+    public int [] squaresPreview;
     public int selectRow, selectColumn;
     public State state;
     public int differencePositionBigSquare = 9, differenceSideBigSquare = 18;
@@ -39,12 +41,13 @@ public class Game7x7Model {
     private int[] colors  = {PURPLE, BLUE, YELLOW, GREEN, RED};
     private List<String> availablePositions;
     private LineChecker lineChecker;
-    private int newSquaresCounter = 0;
+    private int newSquaresCounter = 1;
 
 
     public Game7x7Model(){
 
         allSquares = new Square[7][7];
+        squaresPreview = new int [6];
         availablePositions = new ArrayList<String>();
         randomPosition = new Random();
         randomColor = new Random();
@@ -94,7 +97,8 @@ public class Game7x7Model {
     }
 
     private void updateSquaresAppear(float deltaTime) {
-
+        if (newSquaresCounter == 1)
+            nextColor();
         if (differencePositionBigSquare <= 0 && differenceSideBigSquare <= 0) {
             if (newSquaresCounter == 3) { // ESTO VA EN FUNCION DEL NIVEL ------------PROVISONAL--------------------
                 state = State.ON_GAME;
@@ -105,7 +109,7 @@ public class Game7x7Model {
                     state = State.END_GAME;
                     Log.d("TEST", "FIN JUEGO");
                 }else{
-                createSquareRandom();
+                createSquareRandom(newSquaresCounter-1);
                 newSquaresCounter++;
                 }
             }
@@ -134,7 +138,7 @@ public class Game7x7Model {
 
         if (rB >=0) { // sólo responder si se toca dentro del tablero
 
-            if (allSquares[rB][cB].getColor() != Color.LTGRAY) {
+            if (allSquares[rB][cB].getColor() != GRAY) {
                 if (state == State.SQUARE_SELECTED) {
                     state = State.ON_GAME;
                 }
@@ -154,7 +158,7 @@ public class Game7x7Model {
                     if (allSquares[rB][cB].selectable) {
 
                         int currentColor = allSquares[selectRow][selectColumn].getColor();
-                        allSquares[selectRow][selectColumn].setColor(Color.LTGRAY);
+                        allSquares[selectRow][selectColumn].setColor(GRAY);
 
                         availablePositions.add("" + selectRow + selectColumn);
                         allSquares[rB][cB].setColor(currentColor);
@@ -168,7 +172,8 @@ public class Game7x7Model {
 
                         else {
                             state = State.SQUARES_APPEAR;
-                            createSquareRandom();
+                            nextColor();
+                            //createSquareRandom();
                         }
                     }
                 }
@@ -182,7 +187,7 @@ public class Game7x7Model {
         for (int row = 0; row < 7; row++)
             for (int column = 0; column < 7; column++){
                 if(allSquares[row][column].erasable){
-                    allSquares[row][column].setColor(Color.LTGRAY);
+                    allSquares[row][column].setColor(GRAY);
                     availablePositions.add("" + row + column);
                 }
 
@@ -206,7 +211,7 @@ public class Game7x7Model {
         //compruebo el cuadrado superior
         if (sRow > 0) { // si es == 0 no tiene superior
             if (!allSquares[sRow - 1][sColumn].visited) { // si el superior aun no ha sido visitado
-                if (allSquares[sRow - 1][sColumn].getColor() == Color.LTGRAY) { // si el superior está vacío
+                if (allSquares[sRow - 1][sColumn].getColor() == GRAY) { // si el superior está vacío
                     allSquares[sRow - 1][sColumn].selectable = true;
                     visitNeighbours(sRow - 1, sColumn); //llamada "recursiva"
                 } else {
@@ -218,7 +223,7 @@ public class Game7x7Model {
         //compruebo el cuadrado inferior
         if (sRow < 6) { // si es == 6 no tiene inferior
             if (!allSquares[sRow + 1][sColumn].visited) { // si el inferior aun no ha sido visitado
-                if (allSquares[sRow + 1][sColumn].getColor() == Color.LTGRAY) { // si el inferior está vacío
+                if (allSquares[sRow + 1][sColumn].getColor() == GRAY) { // si el inferior está vacío
                     allSquares[sRow + 1][sColumn].selectable = true;
                     visitNeighbours(sRow + 1, sColumn); //llamada "recursiva"
                 } else {
@@ -230,7 +235,7 @@ public class Game7x7Model {
         //compruebo el cuadrado derecho
         if(sColumn  < 6 ){ // si es == 6 no tiene cuadrado a su derecha
             if(!allSquares[sRow][sColumn + 1].visited) { // si el derecho aun no ha sido visitado
-                if (allSquares[sRow][sColumn + 1].getColor() == Color.LTGRAY) { // si el derecho está vacío
+                if (allSquares[sRow][sColumn + 1].getColor() == GRAY) { // si el derecho está vacío
                     allSquares[sRow ][sColumn + 1].selectable = true;
                     visitNeighbours(sRow  ,sColumn + 1); //llamada "recursiva"
                 } else {
@@ -242,7 +247,7 @@ public class Game7x7Model {
         //compruebo el cuadrado izquierdo
         if(sColumn  > 0 ){ // si es == 0 no tiene cuadrado a su izquierda
             if(!allSquares[sRow][sColumn - 1].visited) { // si el izquierdo aun no ha sido visitado
-                if (allSquares[sRow][sColumn - 1].getColor() == Color.LTGRAY) { // si el izquierdo está vacío
+                if (allSquares[sRow][sColumn - 1].getColor() == GRAY) { // si el izquierdo está vacío
                     allSquares[sRow ][sColumn - 1].selectable = true;
                     visitNeighbours(sRow  ,sColumn - 1); //llamada "recursiva"
                 } else {
@@ -253,7 +258,7 @@ public class Game7x7Model {
     }
 
 
-    private void createSquareRandom() {
+    private void createSquareRandom(int numberSquad) {
 
         int pos = randomPosition.nextInt(availablePositions.size()-0);
         String position = availablePositions.get(pos);
@@ -262,11 +267,19 @@ public class Game7x7Model {
         selectColumn = column;
         selectRow = row;
 
-        allSquares[row][column].setColor(colors[randomColor.nextInt(5 - 0)]);
+        allSquares[row][column].setColor(squaresPreview[numberSquad]);
         availablePositions.remove(pos);
 
         if(lineChecker.checkForLine(row,column,allSquares)){
             eraseLine();
+        }
+
+
+    }
+
+    private void nextColor() {
+        for (int i = 0; i < 3; i++) { // ************ CAMBIAR EN FUNCION DEL NIVEL ***********
+            squaresPreview[i]=colors[randomColor.nextInt(5 - 0)];
         }
 
     }
