@@ -91,7 +91,11 @@ public class Game7x7Model {
             eraseLine();
             difPosBigTransparentSquare=10;
             difSideBigTransparentSquare=20;
+            if(newSquaresCounter == level){ // si ya ha creado los colores de la ronda, sigue jugando
             state = State.ON_GAME;
+            }else{ // si no, es que la linea se ha eliminado al generar un cuadrado nuevo y tienen que salir aún algunos más.
+                state = State.SQUARES_APPEAR;
+            }
         }
         else {
             difPosBigTransparentSquare-=1;
