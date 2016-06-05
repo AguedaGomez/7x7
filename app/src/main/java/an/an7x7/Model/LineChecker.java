@@ -1,5 +1,8 @@
 package an.an7x7.Model;
 
+import android.os.Debug;
+import android.util.Log;
+
 /**
  * Created by NachoLR on 04/06/2016.
  */
@@ -42,29 +45,44 @@ public class LineChecker {
         }
 
         if (checkNegativeDiagonal(row, column, colorCheck) >= 4){ // si hay linea diagonal_negativa.
-            for (int r = row; r < 7; r++) { //recorremos la linea desde la posicion hacia abajo_izquierda
-                for (int c = column; c >= 0; c--)
-                    if (allSquares[r][c].visited)
-                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+
+            int r = row;
+            int c = column;
+            while(r <= 6 && c >= 0){//recorremos la linea desde la posicion hacia abajo_izquierda
+                if (allSquares[r][c].visited)
+                    allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+                r++;
+                c--;
             }
-            for (int r = row; r >= 0; r--){ //recorremos la linea desde la posicion hacia arriba_derecha
-                for (int c = column; c < 7 ; c++)
-                    if (allSquares[r][c].visited)
-                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+            r = row;
+            c = column;
+            while( r >= 0 && c <= 6 ){ //recorremos la linea desde la posicion hacia arriba_derecha
+                if (allSquares[r][c].visited)
+                    allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+                r--;
+                c++;
+
             }
             linesPerformed++;
         }
 
         if (checkPositiveDiagonal(row, column, colorCheck) >= 4){ // si hay linea diagonal_positiva.
-            for (int r = row; r < 7; r++) { //recorremos la linea desde la posicion hacia abajo_derecha
-                for (int c = column; c < 7; c++)
-                    if (allSquares[r][c].visited)
-                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+
+            int r = row;
+            int c = column;
+            while(r <= 6 && c <= 6){ //recorremos la linea desde la posicion hacia abajo_derecha
+                if (allSquares[r][c].visited)
+                    allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+                r++;
+                c++;
             }
-            for (int r = row; r >= 0; r--){ //recorremos la linea desde la posicion hacia arriba_izquierda
-                for (int c = column; c >= 0; c--)
-                    if (allSquares[r][c].visited)
-                        allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+            r = row;
+            c = column;
+            while(r >= 0 && c >= 0){ //recorremos la linea desde la posicion hacia arriba_izquierda
+                if (allSquares[r][c].visited)
+                    allSQ[r][c].erasable = true; // marcamos los visitados para ser borrados.
+                r--;
+                c--;
             }
             linesPerformed++;
         }
