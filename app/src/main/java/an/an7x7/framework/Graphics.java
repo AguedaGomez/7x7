@@ -49,12 +49,8 @@ public class Graphics {
         canvas.drawLine(initialX, initialY, finalX, finalY, paint);
     }
 
-    public int getWidth() {
-        return frameBuffer.getWidth();
-    }
-
-    public int getHeight() {
-        return frameBuffer.getHeight();
+    public void drawBitmap(Bitmap icon, float x, float y) {
+        canvas.drawBitmap(icon,x,y,null);
     }
 
 

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import an.an7x7.R;
+
 
 /**
  * Created by Ague on 04/06/2016.
@@ -43,7 +45,8 @@ public class EndGameDialogFragment extends DialogFragment {
         String score = mArgs.getString("score");
         return new AlertDialog.Builder(getActivity())
                 .setTitle("Game Over")
-                .setMessage(" Score: "+ score)
+                .setMessage(" Score: " + score)
+                .setIcon(R.drawable.icon_xhdpi)
                 .setPositiveButton("Play Again!", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

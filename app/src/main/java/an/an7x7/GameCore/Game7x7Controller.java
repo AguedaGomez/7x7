@@ -48,6 +48,7 @@ public class Game7x7Controller implements IGameController  {
     private DrawNextSquares nextSquares;
     private float progress;
     private int lastColorDeleted = model.GRAY;
+    private Bitmap icon;
 
 
 
@@ -125,7 +126,6 @@ public class Game7x7Controller implements IGameController  {
         graphics.clear(Color.WHITE);
         float x, y;
         int lines2nextLevel = model.LINES_NEXT_LEVEL - model.lines;
-
 
         graphics.drawLine(0,yLine,width, yLine, Color.LTGRAY); // línea de división
         graphics.drawRect(0, 0, progress * model.lines, yLine, lastColorDeleted); // progreso
