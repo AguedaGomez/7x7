@@ -100,12 +100,6 @@ public class Game7x7Model {
             eraseLine();
             difPosBigTransparentSquare=10;
             difSideBigTransparentSquare=20;
-            /*if (newSquaresCounter == level) { // si ya ha generado los cuadrados del nivel
-                state = State.ON_GAME;
-                newSquaresCounter = 0;
-            }else{ // si no, es que ha eliminado una linea aleatoria y tienen que seguir saliendo nuevos
-                state = State.SQUARES_APPEAR;
-            }*/
             state = State.ON_GAME;
         }
         else {
@@ -114,9 +108,15 @@ public class Game7x7Model {
 
         }
         if (lines == LINES_NEXT_LEVEL){
-            lines = 0;
-            level++;
-            nextColor();
+            if (level == 6)
+                state = State.END_GAME;
+            else {
+                lines = 0;
+                level++;
+                nextColor();
+
+            }
+
         }
 
     }
